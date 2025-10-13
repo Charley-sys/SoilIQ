@@ -16,6 +16,7 @@ app.use(express.json());
 app.use("/api/soil", soilRoutes);
 
 // Serve frontend in production
+const path = require("path");
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "client", "client", "build")));
 
