@@ -1,118 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { getStatistics } from "./services/api";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+// client/src/App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import AddSoilReading from "./pages/AddSoilReading";
+import logo from "./assets/my_logo.jpg"; // ✅ Make sure this path exists (lowercase name matters on some systems)
 
 function App() {
-  const [stats, setStats] = useState(null);
-  const userId = "user123"; // Make sure this matches your MongoDB document
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getStatistics(userId);
-        setStats(data);
-      } catch (err) {
-        console.error("Error fetching statistics:", err);
-      }
-    }
-    fetchData();
-  }, [userId]);
-
-  if (!stats) {
-    return (
-      <div style={{ padding: "2rem", fontFamily: "sans-serif", textAlign: "center" }}>
-        <h1>🌱 SoilIQ Dashboard</h1>
-        <p>Loading statistics...</p>
-      </div>
-    );
-  }
-
-  // Color-coded cards based on value thresholds
-  const cardStyle = (metric, value) => {
-    let bg = "#e0e0e0";
-    if (metric === "pH") bg = value >= 6 && value <= 7 ? "#c8e6c9" : "#ffcdd2";
-    if (metric === "Nitrogen") bg = value >= 20 ? "#c8e6c9" : "#ffcc80";
-    if (metric === "Moisture") bg = value >= 15 ? "#c8e6c9" : "#ffe082";
-    return {
-      flex: 1,
-      background: bg,
-      padding: "1rem",
-      margin: "0.5rem",
-      borderRadius: "12px",
-      textAlign: "center",
-      transition: "0.3s",
-      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-    };
-  };
-
-  // Prepare chart data
-  const chartData = [
-    { name: "pH", value: parseFloat(stats.avgPH) },
-    { name: "Nitrogen", value: parseFloat(stats.avgNitrogen) },
-    { name: "Moisture", value: parseFloat(stats.avgMoisture) },
-  ];
-
   return (
-    <div style={{ fontFamily: "sans-serif", maxWidth: "1000px", margin: "auto", padding: "2rem" }}>
-      {/* Hero Banner */}
-      <header style={{
-        textAlign: "center",
-        padding: "2rem",
-        background: "linear-gradient(90deg, #81d4fa, #4fc3f7)",
-        borderRadius: "15px",
-        color: "#fff",
-        marginBottom: "2rem"
-      }}>
-        <h1 style={{ fontSize: "2.5rem", margin: 0 }}>🌱 SoilIQ</h1>
-        <p style={{ fontSize: "1.2rem", marginTop: "0.5rem" }}>Smart Insights for Better Soil & Crop Health</p>
-      </header>
+    <Router>
+      <div className="flex min-h-screen bg-gray-100">
+        {/* ✅ Sidebar */}
+        <aside className="w-64 bg-green-800 text-white flex flex-col shadow-lg fixed h-full">
+          {/* ✅ Logo + Title */}
+          <div className="flex items-center justify-center gap-3 p-6 border-b border-green-700">
+            <img
+              src={logo}
+              alt="SoilIQ Logo"
+              className="w-10 h-10 rounded-full object-cover shadow-md"
+            />
+            <h1 className="text-2xl font-bold tracking-wide">SoilIQ</h1>
+          </div>
 
-      {/* Metrics Cards */}
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "2rem", flexWrap: "wrap" }}>
-        <div style={cardStyle("Total Readings", stats.totalReadings)}>
-          <h3>Total Readings</h3>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.totalReadings}</p>
-        </div>
-        <div style={cardStyle("pH", stats.avgPH)}>
-          <h3>Avg pH</h3>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.avgPH}</p>
-        </div>
-        <div style={cardStyle("Nitrogen", stats.avgNitrogen)}>
-          <h3>Avg Nitrogen</h3>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.avgNitrogen}</p>
-        </div>
-        <div style={cardStyle("Moisture", stats.avgMoisture)}>
-          <h3>Avg Moisture</h3>
-          <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stats.avgMoisture}</p>
-        </div>
+          {/* ✅ Sidebar Navigation */}
+          <nav className="flex-grow p-4 space-y-4">
+            <Link
+              to="/"
+              className="flex items-center gap-2 py-2 px-4 rounded hover:bg-green-700 transition-colors"
+            >
+              <span>📊</span>
+              <span>Dashboard</span>
+            </Link>
+
+            <Link
+              to="/add-reading"
+              className="flex items-center gap-2 py-2 px-4 rounded hover:bg-green-700 transition-colors"
+            >
+              <span>➕</span>
+              <span>Add Reading</span>
+            </Link>
+          </nav>
+
+          {/* ✅ Footer */}
+          <div className="p-4 border-t border-green-700 text-sm text-gray-300 text-center">
+            © {new Date().getFullYear()} SoilIQ
+          </div>
+        </aside>
+
+        {/* ✅ Main Content Area */}
+        <main className="flex-1 ml-64 p-8 overflow-y-auto">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/add-reading" element={<AddSoilReading />} />
+          </Routes>
+        </main>
       </div>
-
-      {/* Chart */}
-      <section style={{ marginBottom: "2rem", background: "#f1f8e9", padding: "1rem", borderRadius: "12px" }}>
-        <h2 style={{ textAlign: "center" }}>📊 Soil Metrics Overview</h2>
-        <ResponsiveContainer width="100%" height={250}>
-          <BarChart data={chartData}>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="value" fill="#4fc3f7" />
-          </BarChart>
-        </ResponsiveContainer>
-      </section>
-
-      {/* Last Reading */}
-      {stats.lastReading && (
-        <section style={{ background: "#fff3e0", padding: "1.5rem", borderRadius: "12px" }}>
-          <h2>📌 Last Reading</h2>
-          <p><strong>Location:</strong> {stats.lastReading.location.name}</p>
-          <p><strong>Soil pH:</strong> {stats.lastReading.soilData.pH}</p>
-          <p><strong>Nitrogen:</strong> {stats.lastReading.soilData.nitrogen}</p>
-          <p><strong>Moisture:</strong> {stats.lastReading.soilData.moisture}</p>
-          <p><strong>AI Insights:</strong> {stats.lastReading.aiInsights}</p>
-          <p><strong>Recommendations:</strong> {stats.lastReading.recommendations.join(", ")}</p>
-        </section>
-      )}
-    </div>
+    </Router>
   );
 }
 

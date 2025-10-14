@@ -1,24 +1,34 @@
-// server/controllers/soilController.js
 const SoilReading = require("../models/soilReading");
 const generateAIInsights = require("../utils/aiInsights");
 const fetchWeatherData = require("../utils/weatherService");
 
-// ✅ Create a new soil reading
+/**
+ * ✅ Create a new soil reading (manual or from sensors)
+ */
 exports.createReading = async (req, res) => {
   try {
     const { userId, location, soilData } = req.body;
 
     if (!userId || !location || !soilData) {
-      return res.status(400).json({ error: "Missing required fields." });
+      return res.status(400).json({ error: "Missing required fields: userId, location, or soilData." });
     }
 
-    // Fetch live weather data based on coordinates
-    const weatherData = await fetchWeatherData(location.latitude, location.longitude);
+    console.log("📥 Incoming soil reading:", req.body);
 
-    // Generate AI insights and recommendations
+    // Try fetching weather only if coordinates exist
+    let weatherData = null;
+    if (location.latitude && location.longitude) {
+      try {
+        weatherData = await fetchWeatherData(location.latitude, location.longitude);
+      } catch (weatherErr) {
+        console.warn("⚠️ Weather fetch failed:", weatherErr.message);
+      }
+    }
+
+    // Generate insights and recommendations
     const { insights, recommendations } = generateAIInsights(soilData, weatherData);
 
-    // Save reading
+    // Save the reading
     const reading = new SoilReading({
       userId,
       location,
@@ -29,20 +39,25 @@ exports.createReading = async (req, res) => {
     });
 
     await reading.save();
-    console.log(`✅ Soil reading saved for user ${userId}`);
-    res.status(201).json(reading);
+    console.log(`✅ Soil reading saved successfully for user ${userId}`);
+
+    res.status(201).json({
+      message: "New soil reading added successfully",
+      reading,
+    });
   } catch (err) {
     console.error("❌ Error creating soil reading:", err);
     res.status(500).json({ error: err.message });
   }
 };
 
-// ✅ Get all readings for a user
+/**
+ * ✅ Get all readings for a specific user
+ */
 exports.getUserReadings = async (req, res) => {
   try {
-    const readings = await SoilReading.find({ userId: req.params.userId })
-      .sort({ timestamp: -1 });
-
+    const { userId } = req.params;
+    const readings = await SoilReading.find({ userId }).sort({ timestamp: -1 });
     res.json(readings);
   } catch (err) {
     console.error(`❌ Error fetching readings for user ${req.params.userId}:`, err);
@@ -50,15 +65,15 @@ exports.getUserReadings = async (req, res) => {
   }
 };
 
-// ✅ Get a single reading by ID
+/**
+ * ✅ Get a single reading by ID
+ */
 exports.getReadingDetail = async (req, res) => {
   try {
     const reading = await SoilReading.findById(req.params.id);
-
     if (!reading) {
       return res.status(404).json({ error: "Reading not found." });
     }
-
     res.json(reading);
   } catch (err) {
     console.error(`❌ Error fetching reading ${req.params.id}:`, err);
@@ -66,10 +81,13 @@ exports.getReadingDetail = async (req, res) => {
   }
 };
 
-// ✅ Get aggregated statistics for a user
+/**
+ * ✅ Compute aggregated statistics for a user
+ */
 exports.getStatistics = async (req, res) => {
   try {
-    const readings = await SoilReading.find({ userId: req.params.userId });
+    const { userId } = req.params;
+    const readings = await SoilReading.find({ userId });
 
     if (!readings.length) {
       return res.json({
@@ -93,6 +111,19 @@ exports.getStatistics = async (req, res) => {
     });
   } catch (err) {
     console.error(`❌ Error computing statistics for user ${req.params.userId}:`, err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/**
+ * 🧪 Optional: Get all readings (for admin/debugging)
+ */
+exports.getAllReadings = async (req, res) => {
+  try {
+    const readings = await SoilReading.find().sort({ createdAt: -1 });
+    res.json(readings);
+  } catch (err) {
+    console.error("❌ Error fetching all readings:", err);
     res.status(500).json({ error: err.message });
   }
 };
