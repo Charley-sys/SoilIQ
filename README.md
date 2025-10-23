@@ -60,7 +60,7 @@ node seed.js
 
 🌍 Deployment
 
-Live App: [Paste your deployment link here]
+Live App: []
 
 Build frontend:
 
