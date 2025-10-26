@@ -1,21 +1,33 @@
-// server/routes/soilRoutes.js
-const express = require("express");
+const express = require('express');
+const soilController = require('../controllers/soilController');
+const authController = require('../controllers/authController');
+
 const router = express.Router();
-const soilController = require("../controllers/soilController");
 
-// ✅ Create a new soil reading (manual or sensor input)
-router.post("/soil-readings", soilController.createReading);
+// Protect all routes
+router.use(authController.protect);
 
-// ✅ Get all readings for a specific user
-router.get("/soil-readings/:userId", soilController.getUserReadings);
+// Soil reading routes
+router.route('/')
+  .get(soilController.getAllSoilReadings)
+  .post(soilController.createSoilReading);
 
-// ✅ Get details of a single reading by ID
-router.get("/soil-readings/detail/:id", soilController.getReadingDetail);
+router.route('/:id')
+  .get(soilController.getSoilReading)
+  .patch(soilController.updateSoilReading)
+  .delete(soilController.deleteSoilReading);
 
-// ✅ Get aggregated statistics for a user (used in dashboard)
-router.get("/statistics/:userId", soilController.getStatistics);
+// Farm-specific routes
+router.get('/farm/:farmId', soilController.getFarmSoilReadings);
+router.get('/farm/:farmId/averages', soilController.getFarmAverages);
+router.get('/farm/:farmId/trends', soilController.getFarmTrends);
 
-// ✅ Optional: Get all readings (for admin/testing)
-router.get("/soil-readings", soilController.getAllReadings);
+// Analytics routes
+router.get('/analytics/health-score/:farmId', soilController.getHealthScore);
+router.get('/analytics/recommendations/:farmId', soilController.getRecommendations);
+router.get('/analytics/comparison', soilController.getComparativeAnalysis);
+
+// Export data
+router.get('/export/:farmId', soilController.exportSoilData);
 
 module.exports = router;
