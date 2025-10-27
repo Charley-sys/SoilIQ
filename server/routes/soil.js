@@ -7,18 +7,18 @@ const router = express.Router();
 // Protect all routes
 router.use(authController.protect);
 
-// Soil reading routes
+// Soil reading routes - FIXED METHOD NAMES
 router.route('/')
-  .get(soilController.getAllSoilReadings)
-  .post(soilController.createSoilReading);
+  .get(soilController.getAllSoilReadings)  // ✅ Fixed
+  .post(soilController.createSoilReading); // ✅ Fixed
 
 router.route('/:id')
-  .get(soilController.getSoilReading)
+  .get(soilController.getSoilReading)      // ✅ Fixed
   .patch(soilController.updateSoilReading)
   .delete(soilController.deleteSoilReading);
 
 // Farm-specific routes
-router.get('/farm/:farmId', soilController.getFarmSoilReadings);
+router.get('/farm/:farmId', soilController.getFarmSoilReadings); // ✅ Fixed
 router.get('/farm/:farmId/averages', soilController.getFarmAverages);
 router.get('/farm/:farmId/trends', soilController.getFarmTrends);
 

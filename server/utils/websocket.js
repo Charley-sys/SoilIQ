@@ -1,6 +1,5 @@
 const WebSocket = require('ws');
 const jwt = require('jsonwebtoken');
-const SoilReading = require('../models/soilReading');
 const User = require('../models/user');
 
 class WebSocketServer {
@@ -18,7 +17,7 @@ class WebSocketServer {
       console.log('New WebSocket connection attempt');
 
       try {
-        // Authenticate connection using JWT from query string or headers
+        // Authenticate connection using JWT from query string
         const token = this.extractToken(request);
         if (!token) {
           ws.close(1008, 'Authentication required');
@@ -37,7 +36,7 @@ class WebSocketServer {
         this.clients.set(user._id.toString(), ws);
         console.log(`User ${user.email} connected via WebSocket`);
 
-        // Send welcome message with current data
+        // Send welcome message
         this.sendToUser(user._id.toString(), {
           type: 'connection_established',
           message: 'WebSocket connection established',
@@ -107,10 +106,6 @@ class WebSocketServer {
           this.handleSoilUnsubscription(user, message);
           break;
 
-        case 'request_current_data':
-          this.sendCurrentData(user, message);
-          break;
-
         default:
           console.log('Unknown message type:', message.type);
       }
@@ -123,10 +118,9 @@ class WebSocketServer {
     }
   }
 
-  async handleSoilSubscription(user, message) {
+  handleSoilSubscription(user, message) {
     const { farmId } = message;
     
-    // In a production app, you might want to validate farm ownership
     this.sendToUser(user._id.toString(), {
       type: 'subscription_confirmed',
       resource: 'soil_updates',
@@ -150,46 +144,6 @@ class WebSocketServer {
     console.log(`User ${user.email} unsubscribed from soil updates for farm ${farmId}`);
   }
 
-  async sendCurrentData(user, message) {
-    try {
-      const { farmId, resource } = message;
-      
-      if (resource === 'soil_readings') {
-        const readings = await SoilReading.find({ 
-          user: user._id,
-          farm: farmId 
-        })
-        .sort({ createdAt: -1 })
-        .limit(10)
-        .populate('farm', 'name location');
-
-        this.sendToUser(user._id.toString(), {
-          type: 'current_soil_readings',
-          farmId,
-          data: readings,
-          timestamp: new Date().toISOString()
-        });
-      }
-    } catch (error) {
-      console.error('Error sending current data:', error);
-      this.sendToUser(user._id.toString(), {
-        type: 'error',
-        message: 'Failed to fetch current data'
-      });
-    }
-  }
-
-  // Broadcast soil reading to all users (for admin/demo purposes)
-  broadcastSoilReading(soilReading) {
-    const message = {
-      type: 'soil_reading_added',
-      data: soilReading,
-      timestamp: new Date().toISOString()
-    };
-
-    this.broadcast(message);
-  }
-
   // Send soil reading to specific user
   notifySoilReadingAdded(userId, soilReading) {
     this.sendToUser(userId, {
@@ -199,7 +153,6 @@ class WebSocketServer {
     });
   }
 
-  // Send soil reading update to specific user
   notifySoilReadingUpdated(userId, soilReading) {
     this.sendToUser(userId, {
       type: 'soil_reading_updated',
@@ -208,7 +161,6 @@ class WebSocketServer {
     });
   }
 
-  // Send soil reading deletion to specific user
   notifySoilReadingDeleted(userId, soilReadingId) {
     this.sendToUser(userId, {
       type: 'soil_reading_deleted',
@@ -217,7 +169,6 @@ class WebSocketServer {
     });
   }
 
-  // Send health score update
   notifyHealthScoreUpdate(userId, farmId, healthScore) {
     this.sendToUser(userId, {
       type: 'health_score_updated',
@@ -227,7 +178,6 @@ class WebSocketServer {
     });
   }
 
-  // Send alert to user
   sendAlert(userId, alert) {
     this.sendToUser(userId, {
       type: 'alert',
@@ -236,7 +186,6 @@ class WebSocketServer {
     });
   }
 
-  // Send notification to user
   sendNotification(userId, notification) {
     this.sendToUser(userId, {
       type: 'notification',

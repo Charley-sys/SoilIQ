@@ -1,5 +1,5 @@
 const express = require('express');
-const Farm = require('../models/Farm');
+const Farm = require('../models/farm');
 const authController = require('../controllers/authController');
 
 const router = express.Router();

@@ -1,22 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const http = require('http');
 require('dotenv').config();
 
-const { initializeWebSocket, attachWebSocket } = require('./middleware/websocketIntegration');
-
 const app = express();
-const server = http.createServer(app);
-
-// Initialize WebSocket
-initializeWebSocket(server);
 
 // Middleware
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use(attachWebSocket);
 
 // Request logging middleware
 app.use((req, res, next) => {
@@ -25,23 +17,20 @@ app.use((req, res, next) => {
 });
 
 // API Routes
+// API Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/soil', require('./routes/soil'));
 app.use('/api/farms', require('./routes/farms'));
-app.use('/api/weather', require('./routes/weather'));
-app.use('/api/analytics', require('./routes/analytics')); // ✅ Added analytics routes
+app.use('/api/weather', require('./routes/weather')); // This should exist
 
-// Health check endpoint with comprehensive status
+// Health check endpoint
 app.get('/api/health', (req, res) => {
-  const webSocketHealth = req.webSocketServer ? req.webSocketServer.healthCheck() : { error: 'WebSocket not initialized' };
-  
   const healthStatus = {
     status: 'OK',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
     memory: process.memoryUsage(),
-    webSocket: webSocketHealth,
     environment: process.env.NODE_ENV || 'development'
   };
 
@@ -59,11 +48,36 @@ app.get('/api', (req, res) => {
       soil: '/api/soil',
       farms: '/api/farms',
       weather: '/api/weather',
-      analytics: '/api/analytics',
       health: '/api/health'
-    },
-    documentation: 'https://github.com/Charley-sys/SoilIQ'
+    }
   });
+});
+
+// 404 handler for API routes - FIXED VERSION
+app.use((req, res, next) => {
+  if (req.originalUrl.startsWith('/api/')) {
+    // Check if this route should have been handled by existing routes
+    const handledRoutes = [
+      '/api/auth', 
+      '/api/soil', 
+      '/api/farms', 
+      '/api/weather', 
+      '/api/health',
+      '/api' // root API endpoint
+    ];
+    
+    const isHandled = handledRoutes.some(route => 
+      req.originalUrl === route || req.originalUrl.startsWith(route + '/')
+    );
+    
+    if (!isHandled) {
+      return res.status(404).json({
+        status: 'error',
+        message: `API endpoint ${req.originalUrl} not found`
+      });
+    }
+  }
+  next();
 });
 
 // Serve static files in production
@@ -73,7 +87,7 @@ if (process.env.NODE_ENV === 'production') {
   // Serve static files from the React app
   app.use(express.static(path.join(__dirname, '../client/build')));
 
-  // The "catchall" handler: for any request that doesn't match one above, send back React's index.html file.
+  // The "catchall" handler
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
   });
@@ -123,34 +137,19 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler for API routes
-app.use('/api/*', (req, res) => {
-  res.status(404).json({
-    status: 'error',
-    message: `API endpoint ${req.originalUrl} not found`
-  });
-});
-
 const PORT = process.env.PORT || 5000;
 
-// MongoDB connection with retry logic
-const connectDB = async (retries = 5, delay = 5000) => {
+// MongoDB connection
+// MongoDB connection - SIMPLIFIED VERSION
+const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/soiliq', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('✅ Connected to MongoDB');
+    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/soiliq');
+    console.log('✅ MongoDB Connected:', conn.connection.host);
+    console.log('📊 Database:', conn.connection.name);
   } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
-    
-    if (retries > 0) {
-      console.log(`Retrying connection in ${delay/1000} seconds... (${retries} retries left)`);
-      setTimeout(() => connectDB(retries - 1, delay), delay);
-    } else {
-      console.error('❌ Could not connect to MongoDB after multiple attempts');
-      process.exit(1);
-    }
+    console.error('❌ MongoDB connection error:', error.message);
+    console.log('💡 Connection string used:', process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/soiliq');
+    process.exit(1);
   }
 };
 
@@ -159,12 +158,11 @@ const startServer = async () => {
   try {
     await connectDB();
     
-    server.listen(PORT, () => {
+    app.listen(PORT, () => {
       console.log(`
 🚀 SoilIQ Server Started!
 📍 Port: ${PORT}
 🌍 Environment: ${process.env.NODE_ENV || 'development'}
-📊 WebSocket: Enabled
 🗄️ Database: MongoDB
 ⏰ Started at: ${new Date().toISOString()}
 
@@ -173,7 +171,6 @@ const startServer = async () => {
    🌱 Soil: http://localhost:${PORT}/api/soil
    🏠 Farms: http://localhost:${PORT}/api/farms
    🌤️ Weather: http://localhost:${PORT}/api/weather
-   📈 Analytics: http://localhost:${PORT}/api/analytics
    ❤️ Health: http://localhost:${PORT}/api/health
 
 ✅ Server is ready to accept requests!
@@ -189,18 +186,8 @@ const startServer = async () => {
 // Handle graceful shutdown
 process.on('SIGTERM', () => {
   console.log('SIGTERM received, shutting down gracefully');
-  server.close(() => {
-    mongoose.connection.close();
-    console.log('Process terminated');
-  });
-});
-
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully');
-  server.close(() => {
-    mongoose.connection.close();
-    console.log('Process terminated');
-  });
+  mongoose.connection.close();
+  console.log('Process terminated');
 });
 
 // Start the application

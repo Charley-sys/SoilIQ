@@ -3,15 +3,17 @@ const WebSocketServer = require('../utils/websocket');
 let webSocketServer = null;
 
 const initializeWebSocket = (server) => {
-  webSocketServer = new WebSocketServer(server);
-  console.log('WebSocket server initialized');
-  return webSocketServer;
+  try {
+    webSocketServer = new WebSocketServer(server);
+    console.log('✅ WebSocket server initialized');
+    return webSocketServer;
+  } catch (error) {
+    console.error('❌ WebSocket initialization failed:', error);
+    return null;
+  }
 };
 
 const getWebSocketServer = () => {
-  if (!webSocketServer) {
-    throw new Error('WebSocket server not initialized');
-  }
   return webSocketServer;
 };
 
@@ -49,4 +51,4 @@ module.exports = {
   getWebSocketServer,
   attachWebSocket,
   notifySoilReadingChange
-};
+}; 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/my_logo.jpg'; // ✅ client/client/src/assets/my_logo.jpg
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,16 +21,30 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        {/* Header */}
+        {/* Header with Logo */}
         <div className="text-center">
-          <div className="mx-auto h-16 w-16 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-            🌱
+          <div className="flex justify-center mb-6">
+            <div className="relative">
+              <img
+                src={logo}
+                alt="SoilIQ Logo"
+                className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-xl"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              {/* Fallback logo */}
+              <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold border-4 border-white shadow-xl hidden">
+                🌱
+              </div>
+            </div>
           </div>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">
-            Sign in to SoilIQ
+          <h2 className="mt-4 text-3xl font-bold text-gray-900">
+            Welcome back
           </h2>
           <p className="mt-2 text-sm text-gray-600">
-            Access your soil monitoring dashboard
+            Sign in to your SoilIQ account
           </p>
         </div>
 
@@ -81,7 +96,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={loading}
-              className="btn btn-primary w-full py-3"
+              className="btn btn-primary w-full py-3 text-lg"
             >
               {loading ? (
                 <>
@@ -89,7 +104,7 @@ const Login = () => {
                   Signing in...
                 </>
               ) : (
-                'Sign in'
+                'Sign in to SoilIQ'
               )}
             </button>
           </div>
@@ -99,9 +114,9 @@ const Login = () => {
               Don't have an account?{' '}
               <Link
                 to="/register"
-                className="font-medium text-green-600 hover:text-green-500"
+                className="font-medium text-green-600 hover:text-green-500 transition-colors"
               >
-                Sign up here
+                Create one here
               </Link>
             </span>
           </div>
