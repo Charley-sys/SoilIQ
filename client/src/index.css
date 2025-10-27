@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -65,4 +70,58 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* FORCEFUL SPACING OVERRIDES */
+main {
+  padding: 2rem 3rem !important;
+}
+
+aside {
+  width: 320px !important;
+}
+
+.grid {
+  gap: 2rem !important;
+}
+
+.p-6 {
+  padding: 2rem !important;
+}
+
+.p-8 {
+  padding: 2.5rem !important;
+}
+
+.space-y-6 > * + * {
+  margin-top: 2rem !important;
+}
+
+.space-y-8 > * + * {
+  margin-top: 2.5rem !important;
+}
+
+.gap-6 {
+  gap: 2rem !important;
+}
+
+.gap-8 {
+  gap: 2.5rem !important;
+}
+/* Logo styling */
+.sidebar-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 2px solid #bbf7d0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure logo container has proper dimensions */
+.logo-container {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

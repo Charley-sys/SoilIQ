@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import logo from '../../assets/Logo.jpg';
 
 const Sidebar = () => {
   const navigation = [
@@ -9,67 +10,58 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-white shadow-lg border-r border-gray-200">
-      {/* Logo section with proper spacing */}
-      <div className="p-6 border-b border-gray-200">
-        <div className="flex items-center space-x-3">
-          {/* Updated logo section */}
+    <div className="w-80 bg-white shadow-xl border-r border-gray-200">
+      {/* Logo section with imported logo */}
+      <div className="p-8 border-b border-gray-200">
+        <div className="flex items-center space-x-4">
           <div className="flex-shrink-0">
             <img 
-              src="/assets/my_logo.jpg" 
+              src={logo} 
               alt="SoilIQ Logo"
-              className="w-12 h-12 rounded-lg object-cover"
-              onError={(e) => {
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
+              className="w-16 h-16 rounded-xl object-cover border-2 border-green-200 shadow-sm"
             />
-            {/* Fallback if logo doesn't load */}
-            <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center text-white font-bold text-lg hidden">
-              SQ
-            </div>
           </div>
           <div>
-            <h1 className="text-xl font-bold text-gray-800">SoilIQ</h1>
-            <p className="text-sm text-gray-500">Soil Monitoring</p>
+            <h1 className="text-2xl font-bold text-gray-800">SoilIQ</h1>
+            <p className="text-sm text-gray-500 mt-1">Smart Soil Monitoring</p>
           </div>
         </div>
       </div>
 
-      {/* Navigation with better spacing */}
-      <nav className="mt-6 px-3">
+      {/* Navigation */}
+      <nav className="mt-8 px-4">
         {navigation.map((item) => (
           <NavLink
             key={item.name}
             to={item.href}
             className={({ isActive }) =>
-              `flex items-center px-3 py-3 mx-2 rounded-lg text-gray-700 hover:bg-green-50 hover:text-green-600 transition-all duration-200 ${
-                isActive ? 'bg-green-50 text-green-600 shadow-sm' : ''
+              `flex items-center px-4 py-4 mx-2 rounded-xl text-gray-700 hover:bg-green-50 hover:text-green-600 transition-all duration-200 mb-2 ${
+                isActive ? 'bg-green-50 text-green-600 shadow-md border border-green-200' : 'border border-transparent'
               }`
             }
           >
-            <span className="text-lg mr-3">{item.icon}</span>
-            <span className="font-medium">{item.name}</span>
+            <span className="text-xl mr-4">{item.icon}</span>
+            <span className="font-semibold text-lg">{item.name}</span>
           </NavLink>
         ))}
       </nav>
 
-      {/* Quick Actions with better spacing */}
-      <div className="mt-8 px-3">
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3 px-3">
+      {/* Quick Actions */}
+      <div className="mt-12 px-4">
+        <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4 px-2">
           Quick Actions
         </h3>
-        <div className="space-y-1 px-2">
-          <button className="w-full flex items-center px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-200">
-            <span className="mr-3 text-base">➕</span>
+        <div className="space-y-3 px-2">
+          <button className="w-full flex items-center px-4 py-3 text-base text-gray-700 hover:bg-gray-50 rounded-xl transition-all duration-200 border border-gray-100 hover:border-gray-300 hover:shadow-sm">
+            <span className="mr-4 text-lg">➕</span>
             Add Soil Reading
           </button>
-          <button className="w-full flex items-center px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-200">
-            <span className="mr-3 text-base">📋</span>
+          <button className="w-full flex items-center px-4 py-3 text-base text-gray-700 hover:bg-gray-50 rounded-xl transition-all duration-200 border border-gray-100 hover:border-gray-300 hover:shadow-sm">
+            <span className="mr-4 text-lg">📋</span>
             Generate Report
           </button>
-          <button className="w-full flex items-center px-3 py-2.5 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors border border-transparent hover:border-gray-200">
-            <span className="mr-3 text-base">🔔</span>
+          <button className="w-full flex items-center px-4 py-3 text-base text-gray-700 hover:bg-gray-50 rounded-xl transition-all duration-200 border border-gray-100 hover:border-gray-300 hover:shadow-sm">
+            <span className="mr-4 text-lg">🔔</span>
             View Alerts
           </button>
         </div>

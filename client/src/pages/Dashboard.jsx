@@ -22,21 +22,19 @@ const Dashboard = () => {
   const latestReading = readings[readings.length - 1];
 
   return (
-    <div className="space-y-8">
-      {/* Quick Stats with more spacing */}
-      <div className="mb-2">
-        <QuickStats latestReading={latestReading} loading={soilLoading} />
-      </div>
+    <div className="space-y-10"> {/* Increased spacing */}
+      {/* Quick Stats */}
+      <QuickStats latestReading={latestReading} loading={soilLoading} />
       
-      {/* Main content grid with better gaps */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
-        {/* Soil Metrics Chart - takes 2/3 on large screens */}
+      {/* Main content grid with much larger gaps */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-10"> {/* Increased gap */}
+        {/* Soil Metrics Chart */}
         <div className="xl:col-span-2">
           <SoilMetrics readings={readings} loading={soilLoading} />
         </div>
         
-        {/* Sidebar content - takes 1/3 on large screens */}
-        <div className="space-y-8">
+        {/* Sidebar content */}
+        <div className="space-y-10"> {/* Increased spacing */}
           <WeatherCard 
             weather={weatherData?.data?.weather} 
             loading={weatherLoading} 
