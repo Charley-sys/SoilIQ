@@ -354,3 +354,146 @@ status.moderate { background: #fff3cd; color: #856404; }
 .logo {
   margin-bottom: 2rem;
 }
+/* AI Insights Styles */
+.ai-insights {
+  background: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+.ai-insights h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Health Score */
+.health-score-card {
+  text-align: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.score-circle {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 1rem 0;
+}
+
+.score-label {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.urgency-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 0.5rem;
+}
+
+.urgency-badge.high {
+  background: #dc3545;
+  color: white;
+}
+
+.urgency-badge.medium {
+  background: #ffc107;
+  color: #000;
+}
+
+.urgency-badge.low {
+  background: #28a745;
+  color: white;
+}
+
+/* Insights Sections */
+.insights-section,
+.recommendations-section,
+.risks-section,
+.crops-section {
+  margin-bottom: 2rem;
+}
+
+.insights-section h3,
+.recommendations-section h3,
+.risks-section h3,
+.crops-section h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insights-list,
+.recommendations-list,
+.risks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.insight-item,
+.recommendation-item,
+.risk-item {
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid;
+}
+
+.insight-item {
+  background: #e3f2fd;
+  border-left-color: #2196f3;
+}
+
+.recommendation-item {
+  background: #e8f5e8;
+  border-left-color: #4caf50;
+}
+
+.risk-item {
+  background: #ffebee;
+  border-left-color: #f44336;
+}
+
+/* Crops Grid */
+.crops-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.crop-tag {
+  background: #fff3e0;
+  color: #e65100;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid #ffb74d;
+}
+
+/* Section Styling */
+.section {
+  margin-bottom: 2rem;
+}
+
+.section h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.no-data {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}

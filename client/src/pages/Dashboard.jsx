@@ -2,6 +2,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
 import Logo from '../components/common/Logo';
+import AIInsights from '../components/AIInsights.jsx';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -52,36 +53,46 @@ const Dashboard = () => {
       </header>
       
       <div className="dashboard-content">
-        <div className="soil-cards">
-          <div className="soil-card">
-            <h3>Latest pH Level</h3>
-            <p className="reading">{latestReading?.pH || 'N/A'}</p>
-            <span className={`status ${pHStatus.class}`}>{pHStatus.label}</span>
-          </div>
-          
-          <div className="soil-card">
-            <h3>Nitrogen (N)</h3>
-            <p className="reading">{latestReading?.nitrogen ? `${latestReading.nitrogen} ppm` : 'N/A'}</p>
-            <span className={`status ${nitrogenStatus.class}`}>{nitrogenStatus.label}</span>
-          </div>
-          
-          <div className="soil-card">
-            <h3>Phosphorus (P)</h3>
-            <p className="reading">{latestReading?.phosphorus ? `${latestReading.phosphorus} ppm` : 'N/A'}</p>
-            <span className={`status ${phosphorusStatus.class}`}>{phosphorusStatus.label}</span>
-          </div>
-          
-          <div className="soil-card">
-            <h3>Potassium (K)</h3>
-            <p className="reading">{latestReading?.potassium ? `${latestReading.potassium} ppm` : 'N/A'}</p>
-            <span className={`status ${potassiumStatus.class}`}>{potassiumStatus.label}</span>
+        {/* Soil Metrics Cards */}
+        <div className="section">
+          <h2>Soil Health Metrics</h2>
+          <div className="soil-cards">
+            <div className="soil-card">
+              <h3>pH Level</h3>
+              <p className="reading">{latestReading?.pH || 'N/A'}</p>
+              <span className={`status ${pHStatus.class}`}>{pHStatus.label}</span>
+            </div>
+            
+            <div className="soil-card">
+              <h3>Nitrogen (N)</h3>
+              <p className="reading">{latestReading?.nitrogen ? `${latestReading.nitrogen} ppm` : 'N/A'}</p>
+              <span className={`status ${nitrogenStatus.class}`}>{nitrogenStatus.label}</span>
+            </div>
+            
+            <div className="soil-card">
+              <h3>Phosphorus (P)</h3>
+              <p className="reading">{latestReading?.phosphorus ? `${latestReading.phosphorus} ppm` : 'N/A'}</p>
+              <span className={`status ${phosphorusStatus.class}`}>{phosphorusStatus.label}</span>
+            </div>
+            
+            <div className="soil-card">
+              <h3>Potassium (K)</h3>
+              <p className="reading">{latestReading?.potassium ? `${latestReading.potassium} ppm` : 'N/A'}</p>
+              <span className={`status ${potassiumStatus.class}`}>{potassiumStatus.label}</span>
+            </div>
           </div>
         </div>
 
+        {/* AI Insights Section */}
+        <div className="section">
+          <AIInsights soilReadings={soilReadings} />
+        </div>
+
+        {/* Action Section */}
         <div className="add-reading-section">
-          <h2>Add New Soil Reading</h2>
-          <p>Track your soil health with regular readings</p>
-          <button className="primary-btn">+ New Reading</button>
+          <h2>Manage Your Soil Data</h2>
+          <p>Add new soil readings to get updated AI recommendations</p>
+          <button className="primary-btn">+ New Soil Reading</button>
         </div>
       </div>
     </div>
