@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext.jsx';
 import Logo from '../components/common/Logo';
 import AIInsights from '../components/AIInsights.jsx';
 import SoilCharts from '../components/SoilCharts.jsx';
+import SoilReadingForm from '../components/SoilReadingForm.jsx';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -12,8 +13,16 @@ const Dashboard = () => {
     { id: 2, date: '2024-01-08', pH: 6.2, nitrogen: 42, phosphorus: 28, potassium: 22 },
     { id: 3, date: '2024-01-01', pH: 6.8, nitrogen: 38, phosphorus: 25, potassium: 20 }
   ]);
+  
+  const [showForm, setShowForm] = useState(false);
 
   const latestReading = soilReadings[0];
+
+  const handleSaveReading = (newReading) => {
+    console.log('Saving new reading:', newReading);
+    setSoilReadings([newReading, ...soilReadings]);
+    setShowForm(false);
+  };
 
   const getStatus = (value, type) => {
     switch(type) {
@@ -96,9 +105,22 @@ const Dashboard = () => {
         {/* Action Section */}
         <div className="add-reading-section">
           <h2>Manage Your Soil Data</h2>
-          <p>Add new soil readings to get updated insights and charts</p>
-          <button className="primary-btn">+ New Soil Reading</button>
+          <p>Add new soil readings to get updated AI recommendations and charts</p>
+          <button 
+            className="primary-btn" 
+            onClick={() => setShowForm(true)}
+          >
+            + New Soil Reading
+          </button>
         </div>
+
+        {/* Soil Reading Form Modal */}
+        {showForm && (
+          <SoilReadingForm
+            onClose={() => setShowForm(false)}
+            onSave={handleSaveReading}
+          />
+        )}
       </div>
     </div>
   );
