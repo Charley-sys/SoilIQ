@@ -1,42 +1,27 @@
-import React from 'react';
-import logo from '../../assets/my_logo.jpg'; // ✅ client/client/src/assets/my_logo.jpg
+// client/src/components/common/Logo.jsx
+import React from "react";
+import logo from "../../assets/Logo.jpg"; // Adjust path based on where you placed it
 
-const Logo = ({ size = 'medium', className = '', showText = true }) => {
+const Logo = ({ size = "medium", className = "", showText = true }) => {
   const sizes = {
-    small: 'w-8 h-8',
-    medium: 'w-12 h-12', 
-    large: 'w-20 h-20',
-    xlarge: 'w-32 h-32'
+    small: "40px",
+    medium: "60px", 
+    large: "80px"
   };
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <div className={`relative ${sizes[size]}`}>
-        <img
-          src={logo}
-          alt="SoilIQ Logo"
-          className="w-full h-full rounded-full object-cover border-2 border-white shadow-lg"
-          onError={(e) => {
-            e.target.style.display = 'none';
-            const fallback = e.target.parentElement.querySelector('.logo-fallback');
-            if (fallback) fallback.style.display = 'flex';
-          }}
-        />
-        <div 
-          className="logo-fallback w-full h-full bg-green-600 rounded-full flex items-center justify-center text-white font-bold border-2 border-white shadow-lg hidden"
-        >
-          {size === 'small' ? '🌱' : 
-           size === 'medium' ? '🌱' : 
-           size === 'large' ? '🌱' : '🌍'}
-        </div>
-      </div>
-      
-      {showText && (
-        <div>
-          <h1 className="text-xl font-bold text-white">SoilIQ</h1>
-          <p className="text-xs text-green-200 opacity-80">Smart Soil Monitoring</p>
-        </div>
-      )}
+    <div className={`Logo ${className}`} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <img 
+        src={logo} 
+        alt="SoilIQ Logo" 
+        style={{ 
+          width: sizes[size], 
+          height: sizes[size],
+          borderRadius: '8px',
+          objectFit: 'cover'
+        }}
+      />
+      {showText && <h1 style={{ color: 'white', margin: 0 }}>SoilIQ</h1>}
     </div>
   );
 };

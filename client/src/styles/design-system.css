@@ -1,76 +1,4 @@
-/* SoilIQ Design System - Modern CSS Variables and Components */
-
-:root {
-  /* Color Palette - Nature Inspired */
-  --primary-green: #2E8B57;
-  --primary-green-dark: #1E6B47;
-  --primary-green-light: #3CB371;
-  
-  --secondary-green: #4CAF50;
-  --earth-brown: #8B4513;
-  --earth-brown-light: #A0522D;
-  --sky-blue: #87CEEB;
-  --sun-yellow: #FFD700;
-  
-  /* Neutral Colors */
-  --white: #FFFFFF;
-  --gray-50: #F9FAFB;
-  --gray-100: #F3F4F6;
-  --gray-200: #E5E7EB;
-  --gray-300: #D1D5DB;
-  --gray-400: #9CA3AF;
-  --gray-500: #6B7280;
-  --gray-600: #4B5563;
-  --gray-700: #374151;
-  --gray-800: #1F2937;
-  --gray-900: #111827;
-  
-  /* Semantic Colors */
-  --success: #10B981;
-  --warning: #F59E0B;
-  --error: #EF4444;
-  --info: #3B82F6;
-  
-  /* Typography */
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-size-xs: 0.75rem;
-  --font-size-sm: 0.875rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.125rem;
-  --font-size-xl: 1.25rem;
-  --font-size-2xl: 1.5rem;
-  --font-size-3xl: 1.875rem;
-  
-  /* Spacing */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
-  --space-10: 2.5rem;
-  --space-12: 3rem;
-  
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.5rem;
-  --radius-xl: 0.75rem;
-  --radius-2xl: 1rem;
-  
-  /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  
-  /* Transitions */
-  --transition-fast: 150ms ease-in-out;
-  --transition-normal: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
-}
-
-/* Reset and Base Styles */
+/* client/src/styles/design-system.css */
 * {
   margin: 0;
   padding: 0;
@@ -78,323 +6,351 @@
 }
 
 body {
-  font-family: var(--font-family);
-  line-height: 1.6;
-  color: var(--gray-800);
-  background-color: var(--gray-50);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
 }
 
-/* Typography Scale */
-.h1 {
-  font-size: var(--font-size-3xl);
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--gray-900);
+.App {
+  min-height: 100vh;
 }
 
-.h2 {
-  font-size: var(--font-size-2xl);
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--gray-900);
-}
-
-.h3 {
-  font-size: var(--font-size-xl);
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--gray-800);
-}
-
-.text-body {
-  font-size: var(--font-size-base);
-  line-height: 1.6;
-  color: var(--gray-700);
-}
-
-.text-small {
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
-  color: var(--gray-600);
-}
-
-/* Button Components */
-.btn {
-  display: inline-flex;
+.layout {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: var(--space-3) var(--space-6);
-  border: none;
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-base);
-  font-weight: 500;
-  line-height: 1;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  gap: var(--space-2);
+  min-height: 100vh;
+  padding: 20px;
 }
 
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.btn-primary {
-  background-color: var(--primary-green);
-  color: var(--white);
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: var(--primary-green-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-secondary {
-  background-color: var(--white);
-  color: var(--gray-700);
-  border: 1px solid var(--gray-300);
-}
-
-.btn-secondary:hover:not(:disabled) {
-  background-color: var(--gray-50);
-  border-color: var(--gray-400);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: var(--primary-green);
-  border: 1px solid var(--primary-green);
-}
-
-.btn-outline:hover:not(:disabled) {
-  background-color: var(--primary-green);
-  color: var(--white);
-}
-
-/* Card Components */
-.card {
-  background: var(--white);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--gray-200);
-  transition: all var(--transition-normal);
-}
-
-.card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
-}
-
-.card-header {
-  padding: var(--space-6);
-  border-bottom: 1px solid var(--gray-200);
-}
-
-.card-body {
-  padding: var(--space-6);
-}
-
-.card-footer {
-  padding: var(--space-6);
-  border-top: 1px solid var(--gray-200);
-}
-
-/* Form Components */
-.form-group {
-  margin-bottom: var(--space-4);
-}
-
-.form-label {
-  display: block;
-  margin-bottom: var(--space-2);
-  font-weight: 500;
-  color: var(--gray-700);
-}
-
-.form-input {
+.auth-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
   width: 100%;
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-base);
-  transition: all var(--transition-fast);
-  background-color: var(--white);
+  max-width: 400px;
+  margin: 20px 0;
 }
 
-.form-input:focus {
-  outline: none;
-  border-color: var(--primary-green);
-  box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
 }
 
-.form-input.error {
-  border-color: var(--error);
+.auth-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-.form-error {
-  color: var(--error);
-  font-size: var(--font-size-sm);
-  margin-top: var(--space-2);
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-/* Alert Components */
-.alert {
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-4);
+.auth-switch button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-.alert-success {
-  background-color: rgba(16, 185, 129, 0.1);
-  border: 1px solid var(--success);
-  color: var(--success);
+.dashboard {
+  min-height: 100vh;
+  background: white;
 }
 
-.alert-warning {
-  background-color: rgba(245, 158, 11, 0.1);
-  border: 1px solid var(--warning);
-  color: var(--warning);
-}
-
-.alert-error {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid var(--error);
-  color: var(--error);
-}
-
-/* Soil Health Indicators */
-.health-indicator {
-  display: inline-flex;
+.dashboard header {
+  background: #667eea;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: between;
   align-items: center;
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
+}
+/* client/src/styles/design-system.css */
+.logo-placeholder {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-.health-excellent {
-  background-color: rgba(16, 185, 129, 0.1);
-  color: var(--success);
+.logo-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-.health-good {
-  background-color: rgba(34, 197, 94, 0.1);
-  color: #16a34a;
+.logo-placeholder h2 {
+  color: #333;
+  margin: 0;
+}
+/* Dashboard Styles */
+.dashboard-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.health-fair {
-  background-color: rgba(245, 158, 11, 0.1);
-  color: var(--warning);
+.logout-btn {
+  background: rgba(255,255,255,0.2);
+  border: 1px solid white;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 15px;
 }
 
-.health-poor {
-  background-color: rgba(239, 68, 68, 0.1);
-  color: var(--error);
+.dashboard-content {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Grid System */
-.grid {
+.soil-cards {
   display: grid;
-  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
-.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .grid-cols-2,
-  .grid-cols-3,
-  .grid-cols-4 {
-    grid-template-columns: 1fr;
-  }
-  
-  .card-body,
-  .card-header,
-  .card-footer {
-    padding: var(--space-4);
-  }
-  
-  .h1 {
-    font-size: var(--font-size-2xl);
-  }
-  
-  .h2 {
-    font-size: var(--font-size-xl);
-  }
+.soil-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-left: 4px solid #667eea;
 }
 
-/* Loading Spinner */
-.spinner {
-  animation: spin 1s linear infinite;
+.soil-card h3 {
+  margin-bottom: 1rem;
+  color: #333;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.reading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #667eea;
+  margin: 0.5rem 0;
 }
 
-/* Soil Parameter Colors */
-.param-ph { color: #8B5CF6; }
-.param-nitrogen { color: #06B6D4; }
-.param-phosphorus { color: #10B981; }
-.param-potassium { color: #F59E0B; }
-.param-moisture { color: #3B82F6; }
-.param-organic { color: #8B4513; }
-
-/* SoilIQ Brand Colors */
-:root {
-  /* Primary Brand Colors */
-  --brand-green: #2E8B57;
-  --brand-green-dark: #1E6B47;
-  --brand-green-light: #3CB371;
-  --brand-green-lighter: #E8F5E8;
-  
-  /* Soil-inspired Colors */
-  --soil-brown: #8B4513;
-  --soil-brown-light: #A0522D;
-  --clay-red: #B22222;
-  --sand-yellow: #F4A460;
-  
-  /* Accent Colors */
-  --accent-blue: #87CEEB;
-  --accent-gold: #FFD700;
-  --accent-orange: #FFA500;
+.status {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: bold;
 }
 
-/* Logo Animation */
-.logo-container {
-  transition: all 0.3s ease;
+.status.good { background: #d4edda; color: #155724; }
+status.moderate { background: #fff3cd; color: #856404; }
+.status.low { background: #f8d7da; color: #721c24; }
+
+.primary-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
 }
 
-.logo-container:hover {
-  transform: scale(1.05);
+.add-reading-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.logo-pulse {
-  animation: logo-pulse 2s infinite;
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-@keyframes logo-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
-/* Brand Gradients */
-.brand-gradient {
-  background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-green-light) 100%);
+.form-group {
+  display: flex;
+  flex-direction: column;
 }
 
-.brand-gradient-light {
-  background: linear-gradient(135deg, var(--brand-green-lighter) 0%, #ffffff 100%);
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #333;
 }
 
-/* Soil-themed UI Elements */
-.soil-texture {
-  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%239C92AC' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.secondary-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+/* Logo Styles */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.logo img {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  flex-grow: 1;
+}
+/* Updated Layout Styles */
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Form Title Styles */
+.form-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Auth Form Styles */
+.auth-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 400px;
+  margin: 20px 0;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.auth-form button {
+  width: 100%;
+  padding: 12px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.auth-form button:hover {
+  background: #5a6fd8;
+}
+
+/* Logo positioning */
+.logo {
+  margin-bottom: 2rem;
 }
