@@ -1,65 +1,75 @@
+// server/models/Farm.js
 const mongoose = require('mongoose');
 
 const farmSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.ObjectId,
     ref: 'User',
     required: [true, 'Farm must belong to a user']
   },
   name: {
     type: String,
-    required: [true, 'Farm name is required'],
+    required: [true, 'Please provide a farm name'],
     trim: true,
-    maxlength: [100, 'Farm name cannot exceed 100 characters']
+    maxlength: [100, 'Farm name cannot be more than 100 characters']
   },
   location: {
-    address: {
+    address: String,
+    city: String,
+    state: String,
+    country: {
       type: String,
-      required: [true, 'Farm address is required']
+      default: 'Kenya'
     },
     coordinates: {
-      latitude: {
+      lat: {
         type: Number,
-        required: true
+        required: [true, 'Please provide latitude']
       },
-      longitude: {
+      lng: {
         type: Number,
-        required: true
+        required: [true, 'Please provide longitude']
       }
+    }
+  },
+  size: {
+    value: Number,
+    unit: {
+      type: String,
+      enum: ['acres', 'hectares'],
+      default: 'acres'
     }
   },
   soilType: {
     type: String,
-    enum: ['sandy', 'clay', 'silt', 'loamy', 'peat', 'chalky', 'unknown'],
-    default: 'unknown'
+    enum: ['sandy', 'clay', 'loamy', 'silty', 'peat', 'chalky', 'rocky']
   },
-  cropType: {
+  primaryCrops: [String],
+  irrigation: {
     type: String,
-    required: [true, 'Crop type is required'],
-    trim: true
-  },
-  farmSize: {
-    value: {
-      type: Number,
-      required: [true, 'Farm size is required'],
-      min: [0.1, 'Farm size must be at least 0.1 hectares']
-    },
-    unit: {
-      type: String,
-      enum: ['hectares', 'acres'],
-      default: 'hectares'
-    }
+    enum: ['rainfed', 'drip', 'sprinkler', 'flood', 'none']
   },
   isActive: {
     type: Boolean,
     default: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
-}, {
-  timestamps: true
 });
 
-// Indexes
+// Index for geospatial queries
+farmSchema.index({ location: '2dsphere' });
 farmSchema.index({ user: 1 });
-farmSchema.index({ 'location.coordinates': '2dsphere' });
+
+farmSchema.pre('save', function(next) {
+  this.updatedAt = Date.now();
+  next();
+});
 
 module.exports = mongoose.model('Farm', farmSchema);

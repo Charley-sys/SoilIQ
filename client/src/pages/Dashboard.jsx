@@ -1,28 +1,48 @@
 // client/src/pages/Dashboard.jsx
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../context/AuthContext.jsx';
-import Logo from '../components/common/Logo';
+import { soilAPI } from '../services/api.js'; // Make sure this path is correct
+import Logo from '../components/common/Logo.jsx';
 import AIInsights from '../components/AIInsights.jsx';
 import SoilCharts from '../components/SoilCharts.jsx';
 import SoilReadingForm from '../components/SoilReadingForm.jsx';
 
 const Dashboard = () => {
   const { user, logout } = useContext(AuthContext);
-  const [soilReadings, setSoilReadings] = useState([
-    { id: 1, date: '2024-01-15', pH: 6.5, nitrogen: 45, phosphorus: 30, potassium: 25 },
-    { id: 2, date: '2024-01-08', pH: 6.2, nitrogen: 42, phosphorus: 28, potassium: 22 },
-    { id: 3, date: '2024-01-01', pH: 6.8, nitrogen: 38, phosphorus: 25, potassium: 20 }
-  ]);
-  
+  const [soilReadings, setSoilReadings] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
 
-  const latestReading = soilReadings[0];
+  useEffect(() => {
+    fetchSoilReadings();
+  }, []);
 
-  const handleSaveReading = (newReading) => {
-    console.log('Saving new reading:', newReading);
-    setSoilReadings([newReading, ...soilReadings]);
-    setShowForm(false);
+  const fetchSoilReadings = async () => {
+    try {
+      const response = await soilAPI.getReadings();
+      if (response.success) {
+        setSoilReadings(response.data.readings);
+      }
+    } catch (error) {
+      console.error('Failed to fetch soil readings:', error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const handleSaveReading = async (newReading) => {
+    try {
+      const response = await soilAPI.createReading(newReading);
+      if (response.success) {
+        setSoilReadings([response.data.soilReading, ...soilReadings]);
+        setShowForm(false);
+      }
+    } catch (error) {
+      console.error('Failed to save soil reading:', error);
+    }
+  };
+
+  const latestReading = soilReadings[0];
 
   const getStatus = (value, type) => {
     switch(type) {
@@ -105,7 +125,7 @@ const Dashboard = () => {
         {/* Action Section */}
         <div className="add-reading-section">
           <h2>Manage Your Soil Data</h2>
-          <p>Add new soil readings to get updated AI recommendations and charts</p>
+          <p>Add new soil readings to get updated insights and charts</p>
           <button 
             className="primary-btn" 
             onClick={() => setShowForm(true)}
@@ -126,4 +146,5 @@ const Dashboard = () => {
   );
 };
 
+// Make sure this default export exists
 export default Dashboard;

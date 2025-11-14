@@ -5,24 +5,32 @@ import { AuthContext } from '../context/AuthContext.jsx';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login attempt:', { email, password });
-    
-    // Temporary login for testing - ensure we're passing proper user data
-    const userData = { 
-      email: email, 
-      name: 'Test User',
-      id: Date.now() // Add an ID to make it more complete
-    };
-    login(userData);
+    setError('');
+    setLoading(true);
+
+    try {
+      const result = await login(email, password);
+      if (!result.success) {
+        setError(result.message);
+      }
+    } catch (error) {
+      setError('Login failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="auth-form">
       <h2 className="form-title">Farmers Login</h2>
+      
+      {error && <div className="error-message">{error}</div>}
       
       <form onSubmit={handleSubmit}>
         <input
@@ -31,6 +39,7 @@ const Login = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          disabled={loading}
         />
         <input
           type="password"
@@ -38,8 +47,11 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          disabled={loading}
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
       </form>
     </div>
   );

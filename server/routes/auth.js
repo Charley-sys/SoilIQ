@@ -1,13 +1,13 @@
+// server/routes/auth.js
 const express = require('express');
-const authController = require('../controllers/authController');
+const { register, login, getMe, updateMe } = require('../controllers/authController');
+const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/register', authController.register);
-router.post('/login', authController.login);
-router.get('/me', authController.protect, authController.getMe);
-router.patch('/profile', authController.protect, authController.updateProfile);
-router.patch('/password', authController.protect, authController.changePassword);
-router.post('/logout', authController.protect, authController.logout);
+router.post('/register', register);
+router.post('/login', login);
+router.get('/me', protect, getMe);
+router.put('/me', protect, updateMe);
 
 module.exports = router;
