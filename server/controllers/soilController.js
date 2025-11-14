@@ -1,5 +1,5 @@
 // server/controllers/soilController.js
-const SoilReading = require('../models/SoilReading');
+const SoilReading = require('../models/soilReading');
 const Farm = require('../models/Farm');
 const SoilAI = require('../utils/aiEngine');
 
