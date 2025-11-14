@@ -1,5 +1,5 @@
-// client/src/services/api.js
-const API_BASE_URL = 'http://localhost:5000/api';
+// Fix: Use consistent variable name
+const API_BASE_URL = 'https://soiliq-server.onrender.com';
 
 // Helper function to get auth header
 const getAuthHeader = () => {
