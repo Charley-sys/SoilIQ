@@ -41,12 +41,17 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Update CORS middleware
+// Update CORS middleware
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://soiliq.vercel.app'
+    'http://localhost:5173', // Vite dev server
+    'https://client-omega-weld.vercel.app', // Your actual Vercel URL
+    'https://soiliq.vercel.app' // Keep this if you'll use it later
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
