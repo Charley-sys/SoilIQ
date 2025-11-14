@@ -1,4 +1,4 @@
-// server/models/SoilReading.js
+// server/models/soilReading.js
 const mongoose = require('mongoose');
 
 const soilReadingSchema = new mongoose.Schema({
@@ -95,4 +95,4 @@ const soilReadingSchema = new mongoose.Schema({
 soilReadingSchema.index({ user: 1, readingDate: -1 });
 soilReadingSchema.index({ readingDate: -1 });
 
-module.exports = mongoose.model('SoilReading', soilReadingSchema);
+module.exports = mongoose.model('soilReading', soilReadingSchema);
