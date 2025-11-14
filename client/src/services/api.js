@@ -9,7 +9,7 @@ const getAuthHeader = () => {
 
 export const authAPI = {
   login: async (email, password) => {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+    const response = await fetch(`${API_BASE_URL}/api/auth/login`, {  // ADD /api
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ export const authAPI = {
   },
 
   register: async (userData) => {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+    const response = await fetch(`${API_BASE_URL}/api/auth/register`, {  // ADD /api
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export const authAPI = {
   },
 
   getProfile: async () => {
-    const response = await fetch(`${API_BASE_URL}/auth/me`, {
+    const response = await fetch(`${API_BASE_URL}/api/auth/me`, {  // ADD /api
       headers: {
         'Content-Type': 'application/json',
         ...getAuthHeader(),
@@ -43,7 +43,7 @@ export const authAPI = {
 
 export const soilAPI = {
   createReading: async (readingData) => {
-    const response = await fetch(`${API_BASE_URL}/soil/readings`, {
+    const response = await fetch(`${API_BASE_URL}/api/soil/readings`, {  // ADD /api
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ export const soilAPI = {
   },
 
   getReadings: async () => {
-    const response = await fetch(`${API_BASE_URL}/soil/readings`, {
+    const response = await fetch(`${API_BASE_URL}/api/soil/readings`, {  // ADD /api
       headers: {
         'Content-Type': 'application/json',
         ...getAuthHeader(),
@@ -65,7 +65,7 @@ export const soilAPI = {
   },
 
   getAnalysis: async (days = 30) => {
-    const response = await fetch(`${API_BASE_URL}/soil/analysis?days=${days}`, {
+    const response = await fetch(`${API_BASE_URL}/api/soil/analysis?days=${days}`, {  // ADD /api
       headers: {
         'Content-Type': 'application/json',
         ...getAuthHeader(),
@@ -75,7 +75,7 @@ export const soilAPI = {
   },
 
   getStats: async () => {
-    const response = await fetch(`${API_BASE_URL}/soil/stats`, {
+    const response = await fetch(`${API_BASE_URL}/api/soil/stats`, {  // ADD /api
       headers: {
         'Content-Type': 'application/json',
         ...getAuthHeader(),
