@@ -1,29 +1,32 @@
 
-🌱 SoilIQ - Smart Soil Analysis Platform
+# 🌱 SoilIQ - Smart Soil Analysis Platform
 https://via.placeholder.com/1200x400/667eea/ffffff?text=SoilIQ+Smart+Soil+Analysis
 
-📖 Overview
+# 📖 Overview
 SoilIQ is a comprehensive full-stack MERN web application that empowers farmers and agricultural professionals with intelligent soil analysis and monitoring capabilities. The platform combines modern web technologies with agricultural science to provide real-time soil health insights, predictive analytics, and actionable recommendations.
 
-🚀 Live Deployments
+# 🚀 Live Deployments
 Frontend: https://client-omega-weld.vercel.app
 
 Backend API: https://soiliq-server.onrender.com
 
+# Login Demo Credentials
+Email-simple@soiliq.com
+Password-123456
 GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
-✨ Key Features
-🔐 Authentication & User Management
-Secure user registration and login system
+# ✨ Key Features
+>🔐 Authentication & User Management
+> Secure user registration and login system
 
-JWT-based authentication
+> JWT-based authentication
 
-User profile management
+> User profile management
 
-Session persistence
+> Session persistence
 
-🌿 Soil Analysis & Monitoring
-Real-time Soil Readings: Capture and store soil parameters including:
+>🌿 Soil Analysis & Monitoring
+# Real-time Soil Readings: Capture and store soil parameters including:
 
 Nitrogen (N), Phosphorus (P), Potassium (K) levels
 
@@ -39,7 +42,7 @@ Historical Data Tracking: Monitor soil health trends over time
 
 Predictive Analytics: Get recommendations for crop optimization
 
-📊 Dashboard & Visualization
+# 📊 Dashboard & Visualization
 Interactive data visualization charts
 
 Real-time soil health metrics
@@ -48,7 +51,7 @@ Comparative analysis across different time periods
 
 Mobile-responsive design for field use
 
-🛠 Technology Stack
+# 🛠 Technology Stack
 Frontend
 React 18 - Modern UI library with hooks
 
@@ -73,7 +76,7 @@ JWT - Authentication tokens
 
 CORS - Cross-origin resource sharing
 
-Deployment & Infrastructure
+# Deployment & Infrastructure
 Vercel - Frontend hosting with CI/CD
 
 Render - Backend service hosting
@@ -82,7 +85,7 @@ MongoDB Atlas - Cloud database
 
 GitHub - Version control and collaboration
 
-🏗 Project Architecture
+# 🏗 Project Architecture
 text
 SoilIQ/
 ├── client/                 # React Frontend
@@ -104,7 +107,7 @@ SoilIQ/
 │   └── server.js           # Application entry point
 │
 └── README.md
-📋 API Endpoints
+# 📋 API Endpoints
 Authentication
 POST /api/auth/register - User registration
 
@@ -128,7 +131,7 @@ GET /api/health - Health check endpoint
 
 GET /api/debug - Debug information
 
-🚀 Installation & Local Development
+# 🚀 Installation & Local Development
 Prerequisites
 Node.js (v16 or higher)
 
@@ -160,7 +163,7 @@ NODE_ENV=development
 PORT=3000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-🎯 Key Challenges & Solutions
+# 🎯 Key Challenges & Solutions
 🔧 Deployment Challenges Overcome
 Module Resolution Issues
 
@@ -186,7 +189,7 @@ Problem: MongoDB Atlas connection in cloud environment
 
 Solution: Proper connection string configuration and error handling
 
-📈 Performance Features
+# 📈 Performance Features
 Optimized Build Process: Vite for fast development and production builds
 
 Efficient API Design: RESTful endpoints with proper error handling
@@ -197,7 +200,7 @@ Secure Authentication: JWT tokens with proper validation
 
 Real-time Data: Immediate feedback on soil readings and analysis
 
-🌟 Future Enhancements
+# 🌟 Future Enhancements
 Mobile application development
 
 IoT sensor integration
@@ -212,7 +215,7 @@ Export capabilities (PDF/Excel reports)
 
 Social features for farmer communities
 
-👥 Target Users
+# 👥 Target Users
 Small-scale Farmers: Monitor and improve soil health
 
 Agricultural Consultants: Provide data-driven recommendations
@@ -221,7 +224,7 @@ Research Institutions: Collect and analyze soil data
 
 Educational Organizations: Teach modern agricultural practices
 
-🤝 Contributing
+# 🤝 Contributing
 We welcome contributions! Please feel free to submit pull requests, report bugs, or suggest new features.
 
 Development Workflow
@@ -235,7 +238,7 @@ Push to the branch (git push origin feature/amazing-feature)
 
 Open a Pull Request
 
-📄 License
+# 📄 License
 This project is licensed under the MIT License - see the LICENSE.md file for details.
 
 
@@ -243,9 +246,10 @@ Open-source community for amazing tools and libraries
 
 Beta testers and early adopters for valuable feedback
 
-📞 Support
+# 📞 Support
 For support, email charlesotienoomondi@gmail.com or create an issue in the GitHub repository.
 
 Built with ❤️ for the future of sustainable agriculture
 
 Making soil science accessible to every farmer
+
