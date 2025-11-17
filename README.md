@@ -150,7 +150,7 @@ NODE_ENV=development
 PORT=3000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-🎯 Key Challenges & Solutions
+## 🎯 Key Challenges & Solutions
 Case Sensitivity
 ✔ Standardized filenames
 
@@ -163,7 +163,7 @@ Environment Differences
 MongoDB Atlas
 ✔ Fixed connection string and errors
 
-📈 Performance Features
+## 📈 Performance Features
 Optimized Vite builds
 
 RESTful API
@@ -174,7 +174,7 @@ Secure authentication
 
 Real-time soil readings
 
-🌟 Future Enhancements
+## 🌟 Future Enhancements
 Mobile app
 
 IoT integration
@@ -189,7 +189,7 @@ PDF/Excel exports
 
 Farmer community
 
-👥 Target Users
+## 👥 Target Users
 Farmers
 
 Consultants
