@@ -1,11 +1,9 @@
 <div align="center">
-
-# 🌱 **SoilIQ — Smart Soil Analysis Platform**
-
-<img src="https://via.placeholder.com/1200x400/667eea/ffffff?text=SoilIQ+Smart+Soil+Analysis">
-
+<div align="center">
+  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/3409716.jpg" alt="SoilIQ Logo" width="80" style="margin-bottom: 10px;"/>
+  <br/>
+  <span style="font-size:24px; font-weight:bold;">SoilIQ — Smart Soil Analysis Platform</span>
 </div>
-
 ---
 
 ## 📖 **Overview**
