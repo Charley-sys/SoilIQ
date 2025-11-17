@@ -1,11 +1,10 @@
 <div align="center">
   <img src="https://github.com/Charley-sys/SoilIQ/blob/main/3409716-removebg-preview.png" alt="SoilIQ Logo" width="80" style="margin-bottom: 10px;"/>
   <br/>
-  <span style="font-size 27px;"><strong>SoilIQ</strong> — Smart Soil Analysis Platform</span>
-  
-  <br/>
-  
-  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/Neon%20Retro%20Stars%20Marketing%20Mockup%20Website%20Instagram%20Post%20(1).png" alt="SoilIQ Mockup" width="100%" style="margin-top: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 1200px;"/>
+  <span style="font-size:40px; font-weight:bold; display:block; margin: 20px 0 30px 0;">
+    SoilIQ — Smart Soil Analysis Platform
+  </span>
+  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/Neon%20Retro%20Stars%20Marketing%20Mockup%20Website%20Instagram%20Post%20(1).png" alt="SoilIQ Mockup" width="100%" style="margin: 40px 0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 1200px;"/>
 </div>
 
 ## 📖 **Overview**
@@ -154,7 +153,7 @@ Server .env
 env
 NODE_ENV=development
 PORT=3000
-MONGODB_URI=mongodb+srv://charlesotienoomondi_db_user:soiliq_database@cluster0.walfe71.mongodb.net/?appName=Cluster0
+MONGODB_URI=mongodb+srv://charlesotienoomondi_db_user:soiliq_database@cluster0.walfe71.mongodb.net/?soiliq=Cluster0
 JWT_SECRET=your_jwt_secret
 🤝 Contributing
 Fork repo
