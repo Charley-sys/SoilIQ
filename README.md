@@ -1,12 +1,11 @@
-I'll help you add the mockup image immediately after the SoilIQ title in your README. Here's the updated section:
-
-```markdown
 <div align="center">
   <img src="https://github.com/Charley-sys/SoilIQ/blob/main/3409716-removebg-preview.png" alt="SoilIQ Logo" width="80" style="margin-bottom: 10px;"/>
   <br/>
   <span style="font-size:24px;"><strong>SoilIQ</strong> — Smart Soil Analysis Platform</span>
+  
   <br/>
-  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/Neon%20Retro%20Stars%20Marketing%20Mockup%20Website%20Instagram%20Post%20(1).png" alt="SoilIQ Mockup" width="600" style="margin: 20px 0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);"/>
+  
+  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/Neon%20Retro%20Stars%20Marketing%20Mockup%20Website%20Instagram%20Post%20(1).png" alt="SoilIQ Mockup" width="100%" style="margin-top: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 1200px;"/>
 </div>
 
 ## 📖 **Overview**
@@ -87,29 +86,28 @@ The platform merges modern web technologies with agricultural science to deliver
 - Node.js, Express.js, MongoDB, Mongoose, JWT, CORS  
 
 ## 🏗 **Project Architecture**
-
-```
 SoilIQ/
 ├── client/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── context/
-│   │   ├── services/
-│   │   └── utils/
-│   ├── public/
-│   └── package.json
+│ ├── src/
+│ │ ├── components/
+│ │ ├── pages/
+│ │ ├── context/
+│ │ ├── services/
+│ │ └── utils/
+│ ├── public/
+│ └── package.json
 │
 ├── server/
-│   ├── config/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   ├── middleware/
-│   └── server.js
+│ ├── config/
+│ ├── controllers/
+│ ├── models/
+│ ├── routes/
+│ ├── middleware/
+│ └── server.js
 │
 └── README.md
-```
+
+text
 
 ## 📋 **API Endpoints**
 
@@ -141,60 +139,38 @@ SoilIQ/
 cd client
 npm install
 npm run dev
-```
-
-### **Backend Setup**
-```bash
+Backend Setup
+bash
 cd server
 npm install
 npm start
-```
+Environment Variables
+Client .env
 
-### **Environment Variables**
-
-**Client .env**
-```env
+env
 VITE_API_URL=http://localhost:3000
-```
+Server .env
 
-**Server .env**
-```env
+env
 NODE_ENV=development
 PORT=3000
 MONGODB_URI=mongodb+srv://charlesotienoomondi_db_user:soiliq_database@cluster0.walfe71.mongodb.net/?appName=Cluster0
 JWT_SECRET=your_jwt_secret
-```
+🤝 Contributing
+Fork repo
 
-## 🤝 Contributing
-1. Fork repo
-2. Create feature branch
-3. Commit changes
-4. Push branch
-5. Open PR
+Create feature branch
 
-## 📄 License
+Commit changes
+
+Push branch
+
+Open PR
+
+📄 License
 MIT License
 
-## 📞 Support
+📞 Support
 For assistance: charlesotienoomondi@gmail.com
 
----
-
-<div align="center">
-  <em>Built with ❤️ for sustainable agriculture</em>
-</div>
-```
-
-## **Key Changes Made:**
-
-1. **Added line break** (`<br/>`) after the title to ensure proper spacing
-2. **Increased mockup width** to `600px` for better visibility
-3. **Added styling** to the mockup image:
-   - `margin: 20px 0` for proper spacing
-   - `border-radius: 12px` for rounded corners
-   - `box-shadow: 0 4px 12px rgba(0,0,0,0.1)` for professional appearance
-   - `alt="SoilIQ Mockup"` for accessibility
-
-4. **Improved formatting** throughout the README with better markdown structure
-
-The mockup image will now load immediately after the SoilIQ title with proper spacing and professional styling! 🚀
+<div align="center"> <em>Built with ❤️ for sustainable agriculture</em> </div> ```
