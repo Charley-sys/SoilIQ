@@ -86,22 +86,37 @@ The platform merges modern web technologies with agricultural science to deliver
 
 ## 🏗 **Project Architecture**
 SoilIQ/
+
 ├── client/
+
 │ ├── src/
+
 │ │ ├── components/
+
 │ │ ├── pages/
+
 │ │ ├── context/
+
 │ │ ├── services/
+
 │ │ └── utils/
+
 │ ├── public/
+
 │ └── package.json
 │
 ├── server/
+
 │ ├── config/
+
 │ ├── controllers/
+
 │ ├── models/
+
 │ ├── routes/
+
 │ ├── middleware/
+
 │ └── server.js
 │
 └── README.md
