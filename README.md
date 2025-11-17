@@ -186,5 +186,4 @@ MIT License
 
 📞 Support
 For assistance: charlesotienoomondi@gmail.com
-
-<div align="center"> <em>Built with ❤️ for sustainable agriculture</em> </div> ```
+                                               Built with ❤️ for sustainable agriculture
