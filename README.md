@@ -3,7 +3,7 @@
   <img src="https://github.com/Charley-sys/SoilIQ/blob/main/3409716-removebg-preview.png" alt="SoilIQ Logo" width="80" style="margin-bottom: 10px;"/>
   <br/>
   <span style="font-size:24px;"><strong>SoilIQ</strong> — Smart Soil Analysis Platform</span>
-  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/Neon%20Retro%20Stars%20Marketing%20Mockup%20Website%20Instagram%20Post%20(1).png"
+  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/Neon%20Retro%20Stars%20Marketing%20Mockup%20Website%20Instagram%20Post%20(1).png" width="80" style="margin-bottom: 10px;"/>
 </div>
 
 ## 📖 **Overview**
