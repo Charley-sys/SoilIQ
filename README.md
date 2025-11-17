@@ -4,7 +4,7 @@
   <br/>
   <span style="font-size:24px; font-weight:bold;">SoilIQ — Smart Soil Analysis Platform</span>
 </div>
----
+
 
 ## 📖 **Overview**
 
