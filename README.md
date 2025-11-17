@@ -45,6 +45,54 @@ The platform merges modern web technologies with agricultural science to deliver
  Trend comparison  
  Mobile-responsive design  
 
+## 🎯 Key Challenges & Solutions
+Case Sensitivity
+✔ Standardized filenames
+
+CORS Issues
+✔ Configured allowed origins
+
+Environment Differences
+✔ Dev vs Production .env files
+
+MongoDB Atlas
+✔ Fixed connection string and errors
+
+## 📈 Performance Features
+Optimized Vite builds
+
+RESTful API
+
+Mobile-first UI
+
+Secure authentication
+
+Real-time soil readings
+
+## 🌟 Future Enhancements
+Mobile app
+
+IoT integration
+
+Advanced ML models
+
+Multi-language
+
+Offline mode
+
+PDF/Excel exports
+
+Farmer community
+
+## 👥 Target Users
+Farmers
+
+Consultants
+
+Researchers
+
+Institutions
+
 
 
 ## 🛠 **Technology Stack**
@@ -150,53 +198,6 @@ NODE_ENV=development
 PORT=3000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
-## 🎯 Key Challenges & Solutions
-Case Sensitivity
-✔ Standardized filenames
-
-CORS Issues
-✔ Configured allowed origins
-
-Environment Differences
-✔ Dev vs Production .env files
-
-MongoDB Atlas
-✔ Fixed connection string and errors
-
-## 📈 Performance Features
-Optimized Vite builds
-
-RESTful API
-
-Mobile-first UI
-
-Secure authentication
-
-Real-time soil readings
-
-## 🌟 Future Enhancements
-Mobile app
-
-IoT integration
-
-Advanced ML models
-
-Multi-language
-
-Offline mode
-
-PDF/Excel exports
-
-Farmer community
-
-## 👥 Target Users
-Farmers
-
-Consultants
-
-Researchers
-
-Institutions
 
 🤝 Contributing
 Fork repo
