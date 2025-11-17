@@ -196,7 +196,8 @@ env
 Copy code
 NODE_ENV=development
 PORT=3000
-MONGODB_URI=your_mongodb_connection_string
+MONGODB_URI=mongodb+srv://charlesotienoomondi_db_user:soiliq_database@cluster0.walfe71.mongodb.net/?appName=Cluster0
+
 JWT_SECRET=your_jwt_secret
 
 🤝 Contributing
