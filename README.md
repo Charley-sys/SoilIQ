@@ -1,8 +1,8 @@
 <div align="center">
 <div align="center">
-  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/3409716-removebg-preview.png" alt="SoilIQ Logo" width="80" style="margin-bottom: 10px;"/>
+  <img src="https://github.com/Charley-sys/SoilIQ/blob/main/3409716.jpg" alt="SoilIQ Logo" width="80" style="margin-bottom: 10px;"/>
   <br/>
-  <span style="font-size:24px; font-weight:bold;">SoilIQ — Smart Soil Analysis Platform</span>
+  <span style="font-size:24px;"><strong>SoilIQ</strong> — Smart Soil Analysis Platform</span>
 </div>
 
 
