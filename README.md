@@ -127,7 +127,8 @@ Copy code
  Git  
 
 ### **Frontend Setup**
-``bash
+
+```bash
 cd client
 npm install
 npm run dev
