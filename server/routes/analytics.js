@@ -1,12 +1,12 @@
 const express = require('express');
 const analyticsController = require('../controllers/analyticsController');
-const authController = require('../controllers/authController');
+// Remove authController import since we don't need protection anymore
 
 const router = express.Router();
 
-router.use(authController.protect);
+// Remove this line: router.use(authController.protect);
 
-// Comprehensive analysis
+// Comprehensive analysis - now accessible without login
 router.get('/comprehensive/:farmId', analyticsController.getComprehensiveAnalysis);
 
 // Comparative analysis across multiple farms
@@ -17,5 +17,8 @@ router.get('/historical/:farmId', analyticsController.getHistoricalTrends);
 
 // Export analytics data
 router.get('/export/:farmId', analyticsController.exportAnalyticsData);
+
+// Add a demo endpoint for immediate access
+router.get('/demo-analysis', analyticsController.getDemoAnalysis);
 
 module.exports = router;

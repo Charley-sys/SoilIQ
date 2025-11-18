@@ -1,42 +1,93 @@
 // client/src/components/SoilReadingForm.jsx
 import React, { useState } from 'react';
 
-const SoilReadingForm = ({ onClose, onSave }) => {
+const SoilReadingForm = ({ onClose = () => {}, onSave = () => {} }) => {
   const [formData, setFormData] = useState({
     pH: '',
     nitrogen: '',
     phosphorus: '',
     potassium: '',
-    temperature: '',
     moisture: '',
-    notes: ''
+    temperature: '',
+    organicMatter: ''
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState({});
 
-  const validateForm = () => {
-    const newErrors = {};
+  const validateField = (name, value) => {
+    const newErrors = { ...errors };
+    
+    switch (name) {
+      case 'pH':
+        if (!value) newErrors.pH = 'pH level is required';
+        else if (value < 0 || value > 14) newErrors.pH = 'pH must be between 0 and 14';
+        else delete newErrors.pH;
+        break;
+      case 'nitrogen':
+        if (!value) newErrors.nitrogen = 'Nitrogen level is required';
+        else if (value < 0) newErrors.nitrogen = 'Nitrogen cannot be negative';
+        else delete newErrors.nitrogen;
+        break;
+      case 'phosphorus':
+        if (!value) newErrors.phosphorus = 'Phosphorus level is required';
+        else if (value < 0) newErrors.phosphorus = 'Phosphorus cannot be negative';
+        else delete newErrors.phosphorus;
+        break;
+      case 'potassium':
+        if (!value) newErrors.potassium = 'Potassium level is required';
+        else if (value < 0) newErrors.potassium = 'Potassium cannot be negative';
+        else delete newErrors.potassium;
+        break;
+      case 'moisture':
+        if (value && (value < 0 || value > 100)) newErrors.moisture = 'Moisture must be between 0% and 100%';
+        else delete newErrors.moisture;
+        break;
+      case 'temperature':
+        if (value && value < -50) newErrors.temperature = 'Temperature seems too low';
+        else if (value && value > 60) newErrors.temperature = 'Temperature seems too high';
+        else delete newErrors.temperature;
+        break;
+      case 'organicMatter':
+        if (value && value < 0) newErrors.organicMatter = 'Organic matter cannot be negative';
+        else if (value && value > 100) newErrors.organicMatter = 'Organic matter seems too high';
+        else delete newErrors.organicMatter;
+        break;
+      default:
+        break;
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
-    if (!formData.pH || formData.pH < 0 || formData.pH > 14) {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const numericValue = value === '' ? '' : Number(value);
+    
+    setFormData({
+      ...formData,
+      [name]: numericValue
+    });
+
+    // Validate field in real-time
+    validateField(name, numericValue);
+  };
+
+  const validateForm = () => {
+    const requiredFields = ['pH', 'nitrogen', 'phosphorus', 'potassium'];
+    const newErrors = {};
+    
+    requiredFields.forEach(field => {
+      if (!formData[field] && formData[field] !== 0) {
+        newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+      }
+    });
+
+    // Additional validations
+    if (formData.pH && (formData.pH < 0 || formData.pH > 14)) {
       newErrors.pH = 'pH must be between 0 and 14';
     }
-
-    if (!formData.nitrogen || formData.nitrogen < 0) {
-      newErrors.nitrogen = 'Nitrogen must be a positive number';
-    }
-
-    if (!formData.phosphorus || formData.phosphorus < 0) {
-      newErrors.phosphorus = 'Phosphorus must be a positive number';
-    }
-
-    if (!formData.potassium || formData.potassium < 0) {
-      newErrors.potassium = 'Potassium must be a positive number';
-    }
-
-    if (formData.temperature && (formData.temperature < -50 || formData.temperature > 60)) {
-      newErrors.temperature = 'Temperature must be between -50°C and 60°C';
-    }
-
     if (formData.moisture && (formData.moisture < 0 || formData.moisture > 100)) {
       newErrors.moisture = 'Moisture must be between 0% and 100%';
     }
@@ -45,214 +96,301 @@ const SoilReadingForm = ({ onClose, onSave }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (validateForm()) {
-      const readingData = {
-        ...formData,
-        pH: parseFloat(formData.pH),
-        nitrogen: parseInt(formData.nitrogen),
-        phosphorus: parseInt(formData.phosphorus),
-        potassium: parseInt(formData.potassium),
-        temperature: formData.temperature ? parseFloat(formData.temperature) : null,
-        moisture: formData.moisture ? parseInt(formData.moisture) : null,
-        date: new Date().toISOString().split('T')[0],
-        id: Date.now()
-      };
+    if (!validateForm()) {
+      alert('Please fix the errors in the form before submitting.');
+      return;
+    }
 
-      onSave(readingData);
+    setIsSubmitting(true);
+    
+    try {
+      await onSave(formData);
+      // Form closing is handled by parent component through onClose
+    } catch (error) {
+      console.error('Error saving reading:', error);
+      alert('Failed to save soil reading. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleClose = () => {
+    if (typeof onClose === 'function') {
       onClose();
     }
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: ''
-      });
-    }
+  const getOptimalRanges = (parameter) => {
+    const ranges = {
+      pH: { min: 6.0, max: 7.0, unit: '' },
+      nitrogen: { min: 40, max: 60, unit: 'ppm' },
+      phosphorus: { min: 25, max: 50, unit: 'ppm' },
+      potassium: { min: 30, max: 50, unit: 'ppm' },
+      moisture: { min: 40, max: 70, unit: '%' },
+      organicMatter: { min: 3, max: 5, unit: '%' }
+    };
+    return ranges[parameter] || {};
   };
 
-  const handleQuickFill = (type) => {
-    const quickData = {
-      optimal: { pH: 6.5, nitrogen: 45, phosphorus: 35, potassium: 30 },
-      acidic: { pH: 5.2, nitrogen: 35, phosphorus: 25, potassium: 20 },
-      alkaline: { pH: 7.8, nitrogen: 50, phosphorus: 40, potassium: 25 },
-      deficient: { pH: 6.0, nitrogen: 15, phosphorus: 12, potassium: 18 }
-    };
+  const isInOptimalRange = (parameter, value) => {
+    const range = getOptimalRanges(parameter);
+    return value >= range.min && value <= range.max;
+  };
 
-    setFormData({
-      ...formData,
-      ...quickData[type]
-    });
+  const InputField = ({ label, name, type = 'number', required = false, step, min, max, placeholder, unit = '' }) => {
+    const range = getOptimalRanges(name);
+    const value = formData[name];
+    const showOptimal = value && range.min !== undefined;
+    const isOptimal = showOptimal && isInOptimalRange(name, value);
+
+    return (
+      <div>
+        <label style={{
+          display: 'block',
+          marginBottom: '0.5rem',
+          fontWeight: '500',
+          color: '#374151'
+        }}>
+          {label} {required && '*'}
+          {range.min !== undefined && (
+            <span style={{
+              fontSize: '0.875rem',
+              color: '#6b7280',
+              fontWeight: 'normal',
+              marginLeft: '0.5rem'
+            }}>
+              (Optimal: {range.min}-{range.max}{range.unit})
+            </span>
+          )}
+        </label>
+        
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={handleChange}
+          step={step}
+          min={min}
+          max={max}
+          placeholder={placeholder}
+          required={required}
+          style={{
+            width: '100%',
+            padding: '0.75rem',
+            border: errors[name] ? '2px solid #ef4444' : '1px solid #d1d5db',
+            borderRadius: '6px',
+            fontSize: '1rem',
+            backgroundColor: errors[name] ? '#fef2f2' : 'white'
+          }}
+        />
+        
+        {errors[name] && (
+          <div style={{
+            color: '#ef4444',
+            fontSize: '0.875rem',
+            marginTop: '0.25rem'
+          }}>
+            {errors[name]}
+          </div>
+        )}
+        
+        {showOptimal && !errors[name] && (
+          <div style={{
+            color: isOptimal ? '#10b981' : '#f59e0b',
+            fontSize: '0.875rem',
+            marginTop: '0.25rem',
+            fontWeight: '500'
+          }}>
+            {isOptimal ? '✓ Within optimal range' : '⚠ Outside optimal range'}
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
-    <div className="modal-overlay">
-      <div className="modal">
-        <div className="modal-header">
-          <h2>Add New Soil Reading</h2>
-          <button onClick={onClose} className="close-btn">&times;</button>
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 1000
+    }}>
+      <div style={{
+        background: 'white',
+        padding: '2.5rem',
+        borderRadius: '20px',
+        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+        border: '1px solid #e5e7eb',
+        maxWidth: '500px',
+        width: '90%',
+        maxHeight: '90vh',
+        overflowY: 'auto'
+      }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '2rem'
+        }}>
+          <h2 style={{ 
+            margin: 0,
+            color: '#1f2937'
+          }}>
+            Add Soil Reading
+          </h2>
+          <button
+            onClick={handleClose}
+            disabled={isSubmitting}
+            style={{
+              background: 'none',
+              border: 'none',
+              fontSize: '1.5rem',
+              cursor: isSubmitting ? 'not-allowed' : 'pointer',
+              color: '#6b7280',
+              padding: '0.5rem',
+              opacity: isSubmitting ? 0.5 : 1
+            }}
+          >
+            ×
+          </button>
         </div>
-
-        {/* Quick Fill Buttons */}
-        <div className="quick-fill-section">
-          <h4>Quick Fill Examples:</h4>
-          <div className="quick-fill-buttons">
-            <button type="button" onClick={() => handleQuickFill('optimal')} className="quick-btn optimal">
-              Optimal Soil
-            </button>
-            <button type="button" onClick={() => handleQuickFill('acidic')} className="quick-btn acidic">
-              Acidic Soil
-            </button>
-            <button type="button" onClick={() => handleQuickFill('alkaline')} className="quick-btn alkaline">
-              Alkaline Soil
-            </button>
-            <button type="button" onClick={() => handleQuickFill('deficient')} className="quick-btn deficient">
-              Nutrient Deficient
-            </button>
-          </div>
-        </div>
-
+        
         <form onSubmit={handleSubmit}>
-          <div className="form-section">
-            <h3>Essential Nutrients</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <label>pH Level *</label>
-                <input
-                  type="number"
-                  name="pH"
-                  step="0.1"
-                  min="0"
-                  max="14"
-                  value={formData.pH}
-                  onChange={handleChange}
-                  required
-                  placeholder="6.5"
-                  className={errors.pH ? 'error' : ''}
-                />
-                {errors.pH && <span className="error-text">{errors.pH}</span>}
-                <div className="input-help">Optimal: 6.0 - 7.0</div>
-              </div>
-              
-              <div className="form-group">
-                <label>Nitrogen (N) ppm *</label>
-                <input
-                  type="number"
-                  name="nitrogen"
-                  min="0"
-                  value={formData.nitrogen}
-                  onChange={handleChange}
-                  required
-                  placeholder="45"
-                  className={errors.nitrogen ? 'error' : ''}
-                />
-                {errors.nitrogen && <span className="error-text">{errors.nitrogen}</span>}
-                <div className="input-help">Optimal: 40 - 60 ppm</div>
-              </div>
-            </div>
+          <div style={{
+            display: 'grid',
+            gap: '1.5rem'
+          }}>
+            <InputField
+              label="pH Level"
+              name="pH"
+              step="0.1"
+              min="0"
+              max="14"
+              placeholder="6.5"
+              required={true}
+            />
 
-            <div className="form-row">
-              <div className="form-group">
-                <label>Phosphorus (P) ppm *</label>
-                <input
-                  type="number"
-                  name="phosphorus"
-                  min="0"
-                  value={formData.phosphorus}
-                  onChange={handleChange}
-                  required
-                  placeholder="30"
-                  className={errors.phosphorus ? 'error' : ''}
-                />
-                {errors.phosphorus && <span className="error-text">{errors.phosphorus}</span>}
-                <div className="input-help">Optimal: 30+ ppm</div>
-              </div>
-              
-              <div className="form-group">
-                <label>Potassium (K) ppm *</label>
-                <input
-                  type="number"
-                  name="potassium"
-                  min="0"
-                  value={formData.potassium}
-                  onChange={handleChange}
-                  required
-                  placeholder="25"
-                  className={errors.potassium ? 'error' : ''}
-                />
-                {errors.potassium && <span className="error-text">{errors.potassium}</span>}
-                <div className="input-help">Optimal: 30+ ppm</div>
-              </div>
-            </div>
-          </div>
+            <InputField
+              label="Nitrogen"
+              name="nitrogen"
+              min="0"
+              placeholder="45"
+              required={true}
+              unit="ppm"
+            />
 
-          <div className="form-section">
-            <h3>Additional Measurements</h3>
-            <div className="form-row">
-              <div className="form-group">
-                <label>Temperature (°C)</label>
-                <input
-                  type="number"
-                  name="temperature"
-                  step="0.1"
-                  min="-50"
-                  max="60"
-                  value={formData.temperature}
-                  onChange={handleChange}
-                  placeholder="25.5"
-                  className={errors.temperature ? 'error' : ''}
-                />
-                {errors.temperature && <span className="error-text">{errors.temperature}</span>}
-              </div>
-              
-              <div className="form-group">
-                <label>Moisture (%)</label>
-                <input
-                  type="number"
-                  name="moisture"
-                  min="0"
-                  max="100"
-                  value={formData.moisture}
-                  onChange={handleChange}
-                  placeholder="65"
-                  className={errors.moisture ? 'error' : ''}
-                />
-                {errors.moisture && <span className="error-text">{errors.moisture}</span>}
-              </div>
-            </div>
-          </div>
+            <InputField
+              label="Phosphorus"
+              name="phosphorus"
+              min="0"
+              placeholder="32"
+              required={true}
+              unit="ppm"
+            />
 
-          <div className="form-section">
-            <div className="form-group">
-              <label>Notes & Observations</label>
-              <textarea
-                name="notes"
-                value={formData.notes}
-                onChange={handleChange}
-                rows="3"
-                placeholder="Any additional observations about the soil, crop condition, weather, etc..."
+            <InputField
+              label="Potassium"
+              name="potassium"
+              min="0"
+              placeholder="38"
+              required={true}
+              unit="ppm"
+            />
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '1rem'
+            }}>
+              <InputField
+                label="Moisture"
+                name="moisture"
+                min="0"
+                max="100"
+                placeholder="65"
+                unit="%"
+              />
+
+              <InputField
+                label="Temperature"
+                name="temperature"
+                step="0.1"
+                placeholder="22"
+                unit="°C"
               />
             </div>
-          </div>
 
-          <div className="form-actions">
-            <button type="button" onClick={onClose} className="secondary-btn">
-              Cancel
-            </button>
-            <button type="submit" className="primary-btn">
-              Save Soil Reading
-            </button>
+            <InputField
+              label="Organic Matter"
+              name="organicMatter"
+              step="0.1"
+              min="0"
+              placeholder="3.2"
+              unit="%"
+            />
+
+            <div style={{
+              display: 'flex',
+              gap: '1rem',
+              justifyContent: 'flex-end',
+              marginTop: '1rem',
+              paddingTop: '1rem',
+              borderTop: '1px solid #e5e7eb'
+            }}>
+              <button
+                type="button"
+                onClick={handleClose}
+                disabled={isSubmitting}
+                style={{
+                  background: 'transparent',
+                  color: '#6b7280',
+                  border: '1px solid #d1d5db',
+                  padding: '12px 24px',
+                  borderRadius: '6px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                  opacity: isSubmitting ? 0.5 : 1
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting || Object.keys(errors).length > 0}
+                style={{
+                  background: Object.keys(errors).length > 0 
+                    ? '#9ca3af' 
+                    : 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '6px',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: (isSubmitting || Object.keys(errors).length > 0) ? 'not-allowed' : 'pointer',
+                  opacity: (isSubmitting || Object.keys(errors).length > 0) ? 0.6 : 1
+                }}
+              >
+                {isSubmitting ? (
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Saving...
+                  </span>
+                ) : (
+                  'Save Reading'
+                )}
+              </button>
+            </div>
           </div>
         </form>
       </div>
