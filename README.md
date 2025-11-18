@@ -1,11 +1,11 @@
 <div align="center"> <img src="https://github.com/Charley-sys/SoilIQ/blob/main/3409716-removebg-preview.png" alt="SoilIQ Logo" width="80" style="margin-bottom: 10px;"/> <br/> <span style="font-size:40px; font-weight:bold; display:block; margin: 20px 0 30px 0;"> SoilIQ — Smart Soil Analysis Platform </span> <img src="https://github.com/Charley-sys/SoilIQ/blob/main/Neon%20Retro%20Stars%20Marketing%20Mockup%20Website%20Instagram%20Post%20(3).png" alt="SoilIQ Mockup" width="100%" style="margin: 40px 0; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 1200px;"/> </div>
 
-## 📖 Overview
+# 📖 Overview
 
 SoilIQ is a full-stack MERN application designed to empower farmers and agricultural professionals with intelligent soil analysis, real-time monitoring, and AI-driven insights.
 It leverages modern web technologies and agricultural science to provide accurate soil health data, predictive analytics, and actionable recommendations.
 
-## 🚀 Live Deployments
+# 🚀 Live Deployments
 
 Frontend: https://soiliqui.vercel.app/
 
@@ -13,8 +13,9 @@ Backend API: https://soiliq-server.onrender.com
 
 GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
-## ✨ Key Features
-- Soil Analysis & Monitoring
+# ✨ Key Features
+
+-Soil Analysis & Monitoring
 
 -Real-time measurements: NPK, pH, moisture, temperature, geo-location
 
@@ -24,7 +25,7 @@ GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
 -Predictive analytics for crop optimization
 
-## 📊 Dashboard & Visualization
+# 📊 Dashboard & Visualization
 
 -Interactive charts and graphs
 
@@ -34,7 +35,7 @@ GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
 -Mobile-responsive design
 
-## 🎯 Challenges & Solutions
+# 🎯 Challenges & Solutions
 
 -Case Sensitivity: Standardized filenames for consistency
 
@@ -44,7 +45,7 @@ GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
 -MongoDB Atlas Connectivity: Optimized connection strings and error handling
 
-## 📈 Performance Optimizations
+# 📈 Performance Optimizations
 
 -Optimized React Vite builds
 
@@ -54,7 +55,7 @@ GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
 -Real-time soil data visualization
 
-## 🌟 Future Enhancements
+# 🌟 Future Enhancements
 
 -Mobile application for Android/iOS
 
@@ -70,7 +71,7 @@ GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
 -Community platform for farmers
 
-## 👥 Target Users
+# 👥 Target Users
 
 -Farmers
 
@@ -80,37 +81,55 @@ GitHub Repository: https://github.com/Charley-sys/SoilIQ
 
 -Institutions
 
-## 🛠 Technology Stack
-Frontend
+# 🛠 Technology Stack
+## Frontend
 
 -React 18, Vite, JSX, CSS3, Context API
 
-Backend
+## Backend
 
 -Node.js, Express.js, MongoDB, Mongoose, CORS
 
-## 🏗 Project Architecture
+# 🏗 Project Architecture
 SoilIQ/
+
 ├── client/
+
 │   ├── src/
+
 │   │   ├── components/
+
 │   │   ├── pages/
+
 │   │   ├── context/
+
 │   │   ├── services/
+
 │   │   └── utils/
+
 │   ├── public/
+
 │   └── package.json
+
 ├── server/
+
 │   ├── config/
+
 │   ├── controllers/
+
 │   ├── models/
+
 │   ├── routes/
+
 │   ├── middleware/
+
 │   └── server.js
+
 │   └── package.json
+
 └── README.md
 
-## 📋 API Endpoints
+# 📋 API Endpoints
 Soil Management
 
 POST /api/soil/readings — Submit new soil readings
