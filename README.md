@@ -13,13 +13,9 @@ SoilIQ is a full-stack MERN application built to empower farmers and agricultura
 The platform merges modern web technologies with agricultural science to deliver accurate soil health data and predictive recommendations.
 
 ## 🚀 **Live Deployments**
-- **Frontend:** https://client-omega-weld.vercel.app  
+- **Frontend:** https://soiliqui.vercel.app/ 
 - **Backend API:** https://soiliq-server.onrender.com  
 - **GitHub Repository:** https://github.com/Charley-sys/SoilIQ  
-
-### 🔐 **Demo Credentials**
-- **Email:** simple@soiliq.com  
-- **Password:** 123456  
 
 ## ✨ **Key Features**
 
