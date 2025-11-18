@@ -118,7 +118,9 @@ SoilIQ/
 │ ├── middleware/
 
 │ └── server.js
-│
+
+  └── package.json
+  
 └── README.md
 
 text
