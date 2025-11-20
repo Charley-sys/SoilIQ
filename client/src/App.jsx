@@ -123,7 +123,7 @@ function App() {
               fontWeight: '500',
               textShadow: '0 1px 2px rgba(255, 255, 255, 0.8)'
             }}>
-              Start analyzing your soil immediately - no login required!
+              Get immediate insights into your soil health — Powered by SoilIQ’s advanced Artificial Intelligence.
             </p>
             <div style={{
               display: 'flex',
