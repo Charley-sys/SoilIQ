@@ -408,7 +408,7 @@ function App() {
                 onMouseOut={(e) => e.target.style.color = '#9ca3af'}>
                   📧 support@soiliq.com
                 </a>
-                <a href="tel:+1234567890" style={{
+                <a href="tel:+254 743 971 067" style={{
                   color: '#9ca3af',
                   textDecoration: 'none',
                   fontSize: '0.9rem',
@@ -416,7 +416,7 @@ function App() {
                 }}
                 onMouseOver={(e) => e.target.style.color = '#10b981'}
                 onMouseOut={(e) => e.target.style.color = '#9ca3af'}>
-                  📞 +1 (234) 567-890
+                  📞 +254 (743) 971-067
                 </a>
                 <span style={{
                   color: '#9ca3af',
@@ -450,7 +450,7 @@ function App() {
                 marginLeft: '0.5rem',
                 fontWeight: '500'
               }}>
-                Demo Mode - Full functionality available without login
+                 Demo Mode - Full functionality available without login
               </span>
             </p>
           </div>
