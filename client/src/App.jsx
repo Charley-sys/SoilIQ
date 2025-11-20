@@ -63,12 +63,12 @@ function App() {
       <Layout>
         {/* Hero Section with Farm Background */}
         <section id="home" style={{
-          background: `linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)), 
-                      url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2832&q=80')`,
+          background: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5)), 
+                      url('/assets/Homepage.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          color: '#1f2937',
+          color: '#000000',
           padding: '6rem 1rem 4rem',
           textAlign: 'center',
           minHeight: '100vh',
