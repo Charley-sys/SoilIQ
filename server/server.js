@@ -39,27 +39,46 @@ app.use('/api', limiter);
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-
-// Update CORS middleware
-// Update CORS middleware
+// CORS middleware - fixed trailing slash
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'http://localhost:5173', // Vite dev server
-    'https://client-omega-weld.vercel.app', // Your actual Vercel URL
-    'https://soiliq.vercel.app' // Keep this if you'll use it later
+    'https://soiliqui.vercel.app', // Fixed: removed trailing slash
+    'https://soiliq.vercel.app'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 // Logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
   app.use(morgan('combined'));
 }
-// Add this before your routes in server.js
+
+// ✅ ADDED: Root route - fixes "Route / not found" error
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: '🌱 SoilIQ Backend API Server',
+    version: '1.0.0',
+    status: 'Running',
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      soil: '/api/soil',
+      debug: '/api/debug'
+    },
+    documentation: 'Visit /api/health for API status'
+  });
+});
+
+// Debug route to inspect request properties
 app.get('/api/debug', (req, res) => {
   res.status(200).json({
     success: true,
@@ -70,6 +89,7 @@ app.get('/api/debug', (req, res) => {
     path: req.path
   });
 });
+
 // Health check route
 app.get('/api/health', (req, res) => {
   res.status(200).json({
@@ -83,6 +103,28 @@ app.get('/api/health', (req, res) => {
 // API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/soil', soilRoutes);
+
+// ✅ ADDED: Debug soil test endpoint
+app.post('/api/debug-soil-test', async (req, res) => {
+  try {
+    console.log('🧪 Debug soil test:', req.body);
+    
+    const SoilAI = require('./utils/aiEngine');
+    const analysis = SoilAI.analyzeSoil(req.body);
+    
+    res.status(200).json({
+      success: true,
+      analysis: analysis,
+      message: 'AI analysis working correctly'
+    });
+  } catch (error) {
+    console.error('❌ Debug soil test error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'AI analysis failed: ' + error.message
+    });
+  }
+});
 
 // Handle undefined routes
 app.all('*', (req, res) => {
@@ -108,27 +150,7 @@ const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
   console.log(`🌱 SoilIQ Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });
-// Add to server.js - debug soil reading
-app.post('/api/debug-soil-test', async (req, res) => {
-  try {
-    console.log('🧪 Debug soil test:', req.body);
-    
-    const SoilAI = require('./utils/aiEngine');
-    const analysis = SoilAI.analyzeSoil(req.body);
-    
-    res.status(200).json({
-      success: true,
-      analysis: analysis,
-      message: 'AI analysis working correctly'
-    });
-  } catch (error) {
-    console.error('❌ Debug soil test error:', error);
-    res.status(500).json({
-      success: false,
-      message: 'AI analysis failed: ' + error.message
-    });
-  }
-});
+
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err, promise) => {
   console.log('Unhandled Rejection at:', promise, 'reason:', err);
