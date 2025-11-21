@@ -63,7 +63,7 @@ function App() {
       <Layout>
         {/* Hero Section with Farm Background */}
         <section id="home" style={{
-          background: `linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5)), 
+          background: `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8)), 
                       url('/assets/Homepage.jpg')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
