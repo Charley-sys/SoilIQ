@@ -176,7 +176,8 @@ Server .env:
 
 NODE_ENV=development
 PORT=3000
-MONGODB_URI=mongodb+srv://charlesotienoomondi_db_user:soiliq_database@cluster0.walfe71.mongodb.net/?soiliq=Cluster0
+MONGODB_URI=<hidden-for-security>
+
 
 🤝 Contributing
 
